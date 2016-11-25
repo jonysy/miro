@@ -1,0 +1,6 @@
+[package]
+name = "euclidean"
+version = "0.1.0"
+authors = ["Jony <jonysy@users.noreply.github.com>"]
+
+[dependencies]
