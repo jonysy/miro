@@ -1,6 +1,4 @@
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-    }
-}
+#![feature(field_init_shorthand, slice_patterns)]
+
+pub mod plane;
+pub use plane::*;
