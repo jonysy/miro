@@ -4,6 +4,10 @@ version = "0.1.0"
 authors = ["Jony <jonysy@users.noreply.github.com>"]
 license = "MIT/Apache-2.0"
 
+[dependencies.core]
+path = "../crates/core"
+version = "0.1.*"
+
 [dependencies.euclidean]
 path = "../crates/euclidean"
 version = "0.1.*"
