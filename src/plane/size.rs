@@ -1,6 +1,7 @@
 use std::fmt;
 use std::ops::Mul;
 
+#[derive(Debug)]
 pub struct Size<I = f64> {
     /// The width.
     pub width: I,
