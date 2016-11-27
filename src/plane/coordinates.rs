@@ -1,4 +1,4 @@
-use std::fmt;
+use std::{fmt, ops};
 
 /// `Coordinates` represents a point in 2-D space.
 #[derive(Debug)]
@@ -40,5 +40,27 @@ impl<I> From<(I, I)> for Coordinates<I> {
 impl<I> From<[I; 2]> for Coordinates<I> {
     fn from([x, y]: [I; 2]) -> Self {
         Coordinates { x, y }
+    }
+}
+
+impl<I> ops::Index<usize> for Coordinates<I> {
+    type Output = I;
+    
+    fn index(&self, index: usize) -> &I {
+        match index {
+            0 => &self.x,
+            1 => &self.y,
+            _ => panic!("Index out of bounds!: {}", index),
+        }
+    }
+}
+
+impl<I> ops::IndexMut<usize> for Coordinates<I> {
+    fn index_mut(&mut self, index: usize) -> &mut I {
+        match index {
+            0 => &mut self.x,
+            1 => &mut self.y,
+            _ => panic!("Index out of bounds!: {}", index),
+        }
     }
 }
