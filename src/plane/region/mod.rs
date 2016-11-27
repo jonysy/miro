@@ -1,6 +1,7 @@
 pub use self::iter::Iter as RegionIter;
 mod iter;
 
+use num::Zero;
 use std::ops;
 use std::ops::Add;
 use super::{Coordinates, Dimensions};
@@ -14,7 +15,17 @@ pub struct Region<I = f64> {
 }
 
 impl<I> Region<I> where I: Copy {
-
+    pub fn new(x: I, y: I, width: I, height: I) -> Region<I> {
+        let coordinates = Coordinates { x, y };
+        let dimensions = Dimensions { width, height };
+        
+        Region { coordinates, dimensions }    
+    }
+    
+    pub fn iter(&self) -> RegionIter<I> where I: Zero {
+        RegionIter::new(self)
+    }
+    
     pub fn min_x(&self) -> I {
         self.coordinates.x
     }

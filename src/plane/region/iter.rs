@@ -1,6 +1,6 @@
 use num::{One, Zero};
-use plane::{Coordinates, Region};
 use std::ops::AddAssign;
+use plane::{Coordinates, Region};
 
 pub struct Iter<'a, I> where I: 'a {
     current: Coordinates<I>,
