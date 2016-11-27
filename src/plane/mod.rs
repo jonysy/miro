@@ -1,7 +1,7 @@
 pub use self::dimensions::Dimensions;
 pub use self::point::Point;
-pub use self::rectangle::Rectangle;
+pub use self::region::Region;
 
 mod dimensions;
 mod point;
-mod rectangle;
+mod region;

@@ -2,14 +2,14 @@ use std::ops::Add;
 use super::{Dimensions, Point};
 
 #[derive(Debug)]
-pub struct Rectangle<I = f64> {
-    /// The position of the top left corner of the rectangle in relation to a reference origin.
+pub struct Region<I = f64> {
+    /// The position of the top left corner of the region in relation to a reference origin.
     pub origin: Point<I>,
     /// The dimensions.
     pub dimensions: Dimensions<I>,
 }
 
-impl<I> Rectangle<I> where I: Copy {
+impl<I> Region<I> where I: Copy {
 
     pub fn min_x(&self) -> I {
         self.origin.x
@@ -31,7 +31,7 @@ impl<I> Rectangle<I> where I: Copy {
         self.origin.y + self.dimensions.height
     }
     
-    /// Returns the maximum point within the bounds of the rectangle.
+    /// Returns the maximum point within the bounds of the region.
     pub fn max(&self) -> Point<I> where I: Add<Output=I> {
         Point { x: self.max_x(), y: self.max_y() }  
     }
@@ -52,51 +52,51 @@ impl<I> Rectangle<I> where I: Copy {
     }
 }
 
-impl<I> Clone for Rectangle<I> where I: Clone {
-    fn clone(&self) -> Rectangle<I> {
-        Rectangle {
+impl<I> Clone for Region<I> where I: Clone {
+    fn clone(&self) -> Region<I> {
+        Region {
             origin: self.origin.clone(),
             dimensions: self.dimensions.clone()
         }
     }
 }
 
-impl<I> Copy for Rectangle<I> where I: Copy { }
+impl<I> Copy for Region<I> where I: Copy { }
 
-impl<I> From<(I, I, I, I)> for Rectangle<I> {
-    fn from((x, y, width, height): (I, I, I, I)) -> Rectangle<I> {
-        Rectangle {
+impl<I> From<(I, I, I, I)> for Region<I> {
+    fn from((x, y, width, height): (I, I, I, I)) -> Region<I> {
+        Region {
             origin: Point { x, y},
             dimensions: Dimensions { width, height }
         }
     }
 }
 
-impl<I> From<[I; 4]> for Rectangle<I> {
-    fn from([x, y, width, height]: [I; 4]) -> Rectangle<I> {
-        Rectangle {
+impl<I> From<[I; 4]> for Region<I> {
+    fn from([x, y, width, height]: [I; 4]) -> Region<I> {
+        Region {
             origin: Point { x, y},
             dimensions: Dimensions { width, height }
         }
     }
 }
 
-impl<I> Into<(I, I, I, I)> for Rectangle<I> {
+impl<I> Into<(I, I, I, I)> for Region<I> {
     fn into(self) -> (I, I, I, I) {
         (self.origin.x, self.origin.y, self.dimensions.width, self.dimensions.height)
     }
 }
 
-impl<I> Into<[I; 4]> for Rectangle<I> {
+impl<I> Into<[I; 4]> for Region<I> {
     fn into(self) -> [I; 4] {
         [self.origin.x, self.origin.y, self.dimensions.width, self.dimensions.height]
     }
 }
 
-impl<I> PartialEq for Rectangle<I> where I: PartialEq {
+impl<I> PartialEq for Region<I> where I: PartialEq {
     fn eq(&self, other: &Self) -> bool {
         self.origin == other.origin && self.dimensions == other.dimensions
     }
 }
 
-impl<I> Eq for Rectangle<I> where I: Eq { }
+impl<I> Eq for Region<I> where I: Eq { }
