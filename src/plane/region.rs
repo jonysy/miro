@@ -1,9 +1,6 @@
-pub use self::iter::Iter as RegionIter;
-mod iter;
-
-use num::Zero;
+use num::{One, Zero};
 use std::ops;
-use std::ops::Add;
+use std::ops::{Add, AddAssign};
 use super::{Coordinates, Dimensions};
 
 #[derive(Debug)]
@@ -144,5 +141,41 @@ impl<I> ops::IndexMut<usize> for Region<I> {
             3 => &mut self.dimensions[1],
             _ => panic!("Index out of bounds!: {}", index),
         }
+    }
+}
+
+pub struct RegionIter<'a, I> where I: 'a {
+    current: Coordinates<I>,
+    region: &'a Region<I>,
+}
+
+impl<'a, I> RegionIter<'a, I> where I: 'a {
+    
+    fn new(region: &'a Region<I>) -> Self where I: Zero {
+        let current = Coordinates { x: I::zero(), y: I::zero() };
+        
+        RegionIter { current, region }
+    }
+}
+
+impl<'a, I> Iterator for RegionIter<'a, I> where I: 'a + AddAssign + Copy + One + PartialOrd + Zero {
+    type Item = (I, I);
+    
+    fn next(&mut self) -> Option<(I, I)> {
+        if self.current[0] + self.region[0] >= self.region[2] {
+            self.current.x = I::zero();
+            self.current.y += I::one();
+        }
+        
+        if self.current[1] + self.region[1] >= self.region[3] {
+            return None;
+        }
+        
+        let x_coordinate = self.current.x + self.region.coordinates.x;
+        let y_coordinate = self.current.y + self.region.coordinates.y;
+            
+        self.current.x += I::one();
+            
+        Some((x_coordinate, y_coordinate))
     }
 }
