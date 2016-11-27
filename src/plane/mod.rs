@@ -1,7 +1,7 @@
+pub use self::coordinates::Coordinates;
 pub use self::dimensions::Dimensions;
-pub use self::point::Point;
 pub use self::region::Region;
 
+mod coordinates;
 mod dimensions;
-mod point;
 mod region;
