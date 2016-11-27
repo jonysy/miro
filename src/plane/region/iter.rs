@@ -20,12 +20,12 @@ impl<'a, I> Iterator for Iter<'a, I> where I: 'a + AddAssign + Copy + One + Part
     type Item = (I, I);
     
     fn next(&mut self) -> Option<(I, I)> {
-        if self.current.x >= self.region.dimensions.width {
+        if self.current[0] + self.region[0] >= self.region[2] {
             self.current.x = I::zero();
             self.current.y += I::one();
         }
         
-        if self.current.y >= self.region.dimensions.height {
+        if self.current[1] + self.region[1] >= self.region[3] {
             return None;
         }
         
