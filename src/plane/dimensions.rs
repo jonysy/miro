@@ -1,4 +1,4 @@
-use std::fmt;
+use std::{fmt, ops};
 use std::ops::Mul;
 
 #[derive(Debug)]
@@ -46,5 +46,27 @@ impl<I> From<(I, I)> for Dimensions<I> {
 impl<I> From<[I; 2]> for Dimensions<I> {
     fn from([width, height]: [I; 2]) -> Self {
         Dimensions { width, height }
+    }
+}
+
+impl<I> ops::Index<usize> for Dimensions<I> {
+    type Output = I;
+    
+    fn index(&self, index: usize) -> &I {
+        match index {
+            0 => &self.width,
+            1 => &self.height,
+            _ => panic!("Index out of bounds!: {}", index),
+        }
+    }
+}
+
+impl<I> ops::IndexMut<usize> for Dimensions<I> {
+    fn index_mut(&mut self, index: usize) -> &mut I {
+        match index {
+            0 => &mut self.width,
+            1 => &mut self.height,
+            _ => panic!("Index out of bounds!: {}", index),
+        }
     }
 }
