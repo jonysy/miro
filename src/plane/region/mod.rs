@@ -1,3 +1,6 @@
+pub use self::iter::Iter as RegionIter;
+mod iter;
+
 use std::ops;
 use std::ops::Add;
 use super::{Coordinates, Dimensions};
