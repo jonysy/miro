@@ -1,3 +1,4 @@
+use std::ops;
 use std::ops::Add;
 use super::{Coordinates, Dimensions};
 
@@ -100,3 +101,29 @@ impl<I> PartialEq for Region<I> where I: PartialEq {
 }
 
 impl<I> Eq for Region<I> where I: Eq { }
+
+impl<I> ops::Index<usize> for Region<I> {
+    type Output = I;
+    
+    fn index(&self, index: usize) -> &I {
+        match index {
+            0 => &self.coordinates[index],
+            1 => &self.coordinates[index],
+            2 => &self.dimensions[index],
+            3 => &self.dimensions[index],
+            _ => panic!("Index out of bounds!: {}", index),
+        }
+    }
+}
+
+impl<I> ops::IndexMut<usize> for Region<I> {
+    fn index_mut(&mut self, index: usize) -> &mut I {
+        match index {
+            0 => &mut self.coordinates[index],
+            1 => &mut self.coordinates[index],
+            2 => &mut self.dimensions[index],
+            3 => &mut self.dimensions[index],
+            _ => panic!("Index out of bounds!: {}", index),
+        }
+    }
+}
