@@ -121,10 +121,10 @@ impl<I> ops::Index<usize> for Region<I> {
     
     fn index(&self, index: usize) -> &I {
         match index {
-            0 => &self.coordinates[index],
-            1 => &self.coordinates[index],
-            2 => &self.dimensions[index],
-            3 => &self.dimensions[index],
+            0 => &self.coordinates[0],
+            1 => &self.coordinates[1],
+            2 => &self.dimensions[0],
+            3 => &self.dimensions[1],
             _ => panic!("Index out of bounds!: {}", index),
         }
     }
@@ -133,10 +133,10 @@ impl<I> ops::Index<usize> for Region<I> {
 impl<I> ops::IndexMut<usize> for Region<I> {
     fn index_mut(&mut self, index: usize) -> &mut I {
         match index {
-            0 => &mut self.coordinates[index],
-            1 => &mut self.coordinates[index],
-            2 => &mut self.dimensions[index],
-            3 => &mut self.dimensions[index],
+            0 => &mut self.coordinates[0],
+            1 => &mut self.coordinates[1],
+            2 => &mut self.dimensions[0],
+            3 => &mut self.dimensions[1],
             _ => panic!("Index out of bounds!: {}", index),
         }
     }
