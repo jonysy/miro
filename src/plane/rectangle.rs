@@ -1,12 +1,12 @@
 use std::ops::Add;
-use super::{Point, Size};
+use super::{Dimensions, Point};
 
 #[derive(Debug)]
 pub struct Rectangle<I = f64> {
     /// The position of the top left corner of the rectangle in relation to a reference origin.
     pub origin: Point<I>,
     /// The dimensions.
-    pub dimensions: Size<I>,
+    pub dimensions: Dimensions<I>,
 }
 
 impl<I> Rectangle<I> where I: Copy {
@@ -67,7 +67,7 @@ impl<I> From<(I, I, I, I)> for Rectangle<I> {
     fn from((x, y, width, height): (I, I, I, I)) -> Rectangle<I> {
         Rectangle {
             origin: Point { x, y},
-            dimensions: Size { width, height }
+            dimensions: Dimensions { width, height }
         }
     }
 }
@@ -76,7 +76,7 @@ impl<I> From<[I; 4]> for Rectangle<I> {
     fn from([x, y, width, height]: [I; 4]) -> Rectangle<I> {
         Rectangle {
             origin: Point { x, y},
-            dimensions: Size { width, height }
+            dimensions: Dimensions { width, height }
         }
     }
 }

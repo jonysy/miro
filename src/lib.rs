@@ -1,4 +1,4 @@
 #![feature(field_init_shorthand, slice_patterns)]
 
 pub mod plane;
-pub use plane::{Point, Rectangle, Size};
+pub use plane::{Dimensions, Point, Rectangle};
