@@ -51,6 +51,11 @@ impl<I> Region<I> where I: Copy {
         Coordinates { x: self.max_x(), y: self.max_y() }  
     }
     
+    /// Returns the point at the top-left corner.
+    pub fn top_left(&self) -> Coordinates<I> where I: Add<Output=I> {
+        self.min()
+    }
+    
     /// Returns the point at the top-right corner.
     pub fn top_right(&self) -> Coordinates<I> where I: Add<Output=I> {
         Coordinates { x: self.max_x(), y: self.min_y() }
