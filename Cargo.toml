@@ -3,4 +3,6 @@ name = "caribou-ext"
 version = "0.1.0"
 authors = ["Jony <jonysy@users.noreply.github.com>"]
 
-[dependencies]
+[dependencies.caribou-euclidean]
+path = "../euclidean"
+version = "0.1.0"
