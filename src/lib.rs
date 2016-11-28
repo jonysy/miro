@@ -1,5 +1,7 @@
 #![feature(field_init_shorthand)]
 
-pub use self::error::{Error, Kind as ErrorKind};
+pub use error::{Error, Kind as ErrorKind};
+pub use result::Result;
 
 mod error;
+mod result;
