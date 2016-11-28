@@ -1,4 +1,4 @@
-pub use self::kind::Kind;
+pub use self::kind::Kind::{self, Motion as MotionErr};
 mod kind;
 
 use std::{error, fmt};
@@ -31,8 +31,9 @@ impl fmt::Display for Error {
 }
 
 impl error::Error for Error {
-    fn description(&self) -> &str {        
+    fn description(&self) -> &str {         
         match self.kind {
+            MotionErr => "An error occured while analysing information related to motion.",
             _ => "Something unexpected went wrong!",
         }
     }
