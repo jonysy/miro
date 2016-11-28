@@ -1,3 +1,11 @@
+pub use self::corresponding_points::CorrespondingPoints;
+pub use self::flow_fn::FlowFn;
+pub use self::points::Points;
+
+mod corresponding_points;
+mod flow_fn;
+mod points;
+
 use std::error::Error;
 
 /// [Optical flow][1] or optic flow is the pattern of apparent motion of objects, surfaces, and
