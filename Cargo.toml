@@ -4,6 +4,6 @@ version = "0.1.0"
 authors = ["Jony <jonysy@users.noreply.github.com>"]
 license = "MIT/Apache-2.0"
 
-[dependencies.caribou-euclidean]
-path = "../euclidean"
-version = "0.1.0"
+[dependencies]
+image = "0.10.4"
+imageproc = "0.6.0"

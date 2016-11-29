@@ -1,1 +1,4 @@
-extern crate caribou_euclidean as euclidean;
+pub extern crate imageproc as processing;
+extern crate image;
+
+pub use image::*;
