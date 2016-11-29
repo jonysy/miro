@@ -1,0 +1,8 @@
+[package]
+name = "caribou-linear"
+version = "0.1.0"
+authors = ["Jony <jonysy@users.noreply.github.com>"]
+
+[dependencies]
+imageproc = "0.6.0"
+nalgebra = "0.5.1"
