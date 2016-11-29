@@ -4,10 +4,26 @@ version = "0.1.0"
 authors = ["Jony <jonysy@users.noreply.github.com>"]
 license = "MIT/Apache-2.0"
 
-[dependencies.core]
+[dependencies.caribou-core]
 path = "../crates/core"
 version = "0.1.*"
 
-[dependencies.euclidean]
+[dependencies.caribou-euclidean]
 path = "../crates/euclidean"
+version = "0.1.*"
+
+[dependencies.caribou-ext]
+path = "../crates/ext"
+version = "0.1.*"
+
+[dependencies.caribou-image]
+path = "../crates/image"
+version = "0.1.*"
+
+[dependencies.caribou-linear]
+path = "../crates/linear"
+version = "0.1.*"
+
+[dependencies.caribou-motion]
+path = "../crates/motion"
 version = "0.1.*"
