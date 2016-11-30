@@ -27,3 +27,7 @@ version = "0.1.*"
 [dependencies.caribou-motion]
 path = "../crates/motion"
 version = "0.1.*"
+
+[dependencies.caribou-tracking]
+path = "../crates/tracking"
+version = "0.1.*"

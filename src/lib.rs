@@ -4,3 +4,4 @@ pub extern crate caribou_ext as ext;
 pub extern crate caribou_image as image;
 pub extern crate caribou_linear as linear;
 pub extern crate caribou_motion as motion;
+pub extern crate caribou_tracking as tracking;
