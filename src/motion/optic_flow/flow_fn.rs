@@ -2,6 +2,6 @@ use super::{CorrespondingPoints, Points};
 
 pub trait FlowFn<I>: super::OpticFlow {
     
-    /// Computes the optical flow.
+    /// Calculate movement of selected points in a pair of images.
     fn flow(&self, &I, &Points, &I) -> Result<CorrespondingPoints, Self::Err>;
 }
