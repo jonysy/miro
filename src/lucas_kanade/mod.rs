@@ -1,3 +1,3 @@
-pub use self::pyramidal::LkPyramid;
+pub use self::pyramidal::PyrLk;
 
 mod pyramidal;
