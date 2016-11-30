@@ -2,6 +2,7 @@
 #[derive(Debug)]
 pub enum Kind {    
     Motion,
+    Tracking,
     
     #[doc(hidden)]
     _NonExhaustive,

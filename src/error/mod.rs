@@ -1,4 +1,4 @@
-pub use self::kind::Kind::{self, Motion as MotionErr};
+pub use self::kind::Kind::{self, Motion as MotionErr, Tracking as TrackingErr};
 mod kind;
 
 use std::{error, fmt};
@@ -34,6 +34,7 @@ impl error::Error for Error {
     fn description(&self) -> &str {         
         match self.kind {
             MotionErr => "An error occured while analysing information related to motion.",
+            TrackingErr => "An error occured during tracking.",
             _ => "Something unexpected went wrong!",
         }
     }
