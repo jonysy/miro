@@ -4,3 +4,20 @@ version = "0.1.0"
 authors = ["Jony <jonysy@users.noreply.github.com>"]
 
 [dependencies]
+extensions = { path = "../../../../extensions" }
+
+[dependencies.caribou-core]
+path = "../core"
+version = "0.1.0"
+
+[dependencies.caribou-euclidean]
+path = "../euclidean"
+version = "0.1.0"
+
+[dependencies.caribou-ext]
+path = "../ext"
+version = "0.1.0"
+
+[dependencies.caribou-image]
+path = "../image"
+version = "0.1.0"
