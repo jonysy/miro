@@ -1,10 +1,11 @@
 [package]
-name = "lychee-tracking"
+name = "lychee-motion"
 version = "0.1.0"
 authors = ["Jony <jonysy@users.noreply.github.com>"]
+license = "MIT/Apache-2.0"
 
 [dependencies]
-extensions = { path = "../../../../extensions" }
+extensions = { git = "https://github.com/jonysy/extensions.git" }
 
 [dependencies.lychee-core]
 path = "../core"
@@ -16,6 +17,10 @@ version = "0.1.0"
 
 [dependencies.lychee-ext]
 path = "../ext"
+version = "0.1.0"
+
+[dependencies.lychee-linear]
+path = "../linear"
 version = "0.1.0"
 
 [dependencies.lychee-image]
