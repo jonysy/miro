@@ -1,0 +1,23 @@
+[package]
+name = "lychee-tracking"
+version = "0.1.0"
+authors = ["Jony <jonysy@users.noreply.github.com>"]
+
+[dependencies]
+extensions = { path = "../../../../extensions" }
+
+[dependencies.lychee-core]
+path = "../core"
+version = "0.1.0"
+
+[dependencies.lychee-euclidean]
+path = "../euclidean"
+version = "0.1.0"
+
+[dependencies.lychee-ext]
+path = "../ext"
+version = "0.1.0"
+
+[dependencies.lychee-image]
+path = "../image"
+version = "0.1.0"
