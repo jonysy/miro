@@ -1,4 +1,4 @@
-extern crate caribou_euclidean as euclidean;
+extern crate lychee_euclidean as euclidean;
 
 pub mod motion;
 pub mod tracking;
