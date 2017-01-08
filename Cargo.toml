@@ -6,29 +6,29 @@ authors = ["Jony <jonysy@users.noreply.github.com>"]
 license = "MIT/Apache-2.0"
 
 [dependencies.lychee-core]
-path = "../crates/core"
+path = "../μcrates/core"
 version = "0.1.*"
 
 [dependencies.lychee-euclidean]
-path = "../crates/euclidean"
+path = "../μcrates/euclidean"
 version = "0.1.*"
 
 [dependencies.lychee-ext]
-path = "../crates/ext"
+path = "../μcrates/ext"
 version = "0.1.*"
 
 [dependencies.lychee-image]
-path = "../crates/image"
+path = "../μcrates/image"
 version = "0.1.*"
 
 [dependencies.lychee-linear]
-path = "../crates/linear"
+path = "../μcrates/linear"
 version = "0.1.*"
 
 [dependencies.lychee-motion]
-path = "../crates/motion"
+path = "../μcrates/motion"
 version = "0.1.*"
 
 [dependencies.lychee-tracking]
-path = "../crates/tracking"
+path = "../μcrates/tracking"
 version = "0.1.*"
