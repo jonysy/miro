@@ -1,23 +1,23 @@
 [package]
-name = "caribou-tracking"
+name = "lychee-tracking"
 version = "0.1.0"
 authors = ["Jony <jonysy@users.noreply.github.com>"]
 
 [dependencies]
 extensions = { path = "../../../../extensions" }
 
-[dependencies.caribou-core]
+[dependencies.lychee-core]
 path = "../core"
 version = "0.1.0"
 
-[dependencies.caribou-euclidean]
+[dependencies.lychee-euclidean]
 path = "../euclidean"
 version = "0.1.0"
 
-[dependencies.caribou-ext]
+[dependencies.lychee-ext]
 path = "../ext"
 version = "0.1.0"
 
-[dependencies.caribou-image]
+[dependencies.lychee-image]
 path = "../image"
 version = "0.1.0"
