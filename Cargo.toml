@@ -22,7 +22,7 @@ path = "../μcrates/image"
 version = "0.1.*"
 
 [dependencies.lychee-linear]
-path = "../μcrates/linear"
+path = "μcrates/linear"
 version = "0.1.*"
 
 [dependencies.lychee-motion]
