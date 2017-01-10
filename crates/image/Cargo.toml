@@ -4,5 +4,5 @@ version = "0.1.0"
 authors = ["Jony <jonysy@users.noreply.github.com>"]
 
 [dependencies]
-image = "0.10.4"
-imageproc = "0.6.0"
+image = "0.12.1"
+imageproc = "0.7.0"
