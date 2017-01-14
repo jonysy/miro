@@ -1,5 +1,5 @@
 #[no_mangle]
-pub fn dyn_func() {
+pub fn dyn_func() -> Result<(), String> {
 
-	println!("..");
+	include!(concat!(env!("OUT_DIR"), "/main.rs"))
 }

@@ -62,9 +62,13 @@ pub fn load_then_drop(path_buf: &PathBuf) {
 
 		unsafe {
 
-			let func: Symbol<fn()> = library.get(SYMBOL).expect("failed to get `fn`");
+			let func: Symbol<fn() -> Result<(), String>> = 
+				library.get(SYMBOL).expect("failed to get `fn`");
 
-			func();
+			if let Err(message) = func() {
+
+				error!("{}", message);
+			}
 		}
 
 		mem::drop(library);
