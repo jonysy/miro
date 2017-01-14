@@ -1,13 +1,12 @@
 #[macro_use]
 extern crate log;
 
+extern crate high;
 extern crate libloading;
-extern crate mirage;
 
 use libloading::{Library, Symbol};
-use std::{env, mem, process, str, thread};
+use std::{env, mem, process, str};
 use std::path::PathBuf;
-use std::time::Duration;
 
 #[cfg(target_os = "macos")]
 const DYNAMIC_LIBRARY_EXTENSION: &'static str = "dylib";
@@ -20,7 +19,7 @@ const DYNAMIC_LIBRARY_NAME: &'static str = concat!("lib", env!("CARGO_PKG_NAME")
 const SYMBOL: &'static [u8] = b"dyn_func";
 
 fn main() {
-	mirage::logger::init().expect("failed to initialize logger");
+	logger::init().expect("failed to initialize logger");
 
 	let path_buf = {
 		let exe = env::current_exe().unwrap();
@@ -28,16 +27,7 @@ fn main() {
 		directory.join(DYNAMIC_LIBRARY_NAME).with_extension(DYNAMIC_LIBRARY_EXTENSION)
 	};
 
-	loop {
-
-		load_then_drop(&path_buf);
-
-		let (secs, nanos) = (2, 0);
-
-		thread::sleep(
-			Duration::new(secs, nanos)
-		);
-	}
+	high::currentize(|| load_then_drop(&path_buf));
 }
 
 pub fn load_then_drop(path_buf: &PathBuf) {
@@ -78,5 +68,31 @@ pub fn load_then_drop(path_buf: &PathBuf) {
 		//error!("{}", output.status);
 		error!("{}", String::from_utf8_lossy(&output.stdout));
 		//error!("{}", String::from_utf8_lossy(&output.stderr));
+	}
+}
+
+mod logger {
+
+	use log::{self, LogRecord, LogLevel, LogLevelFilter, LogMetadata, SetLoggerError};
+
+	pub struct Logger;
+
+	impl log::Log for Logger {
+	    fn enabled(&self, metadata: &LogMetadata) -> bool {
+	        metadata.level() <= LogLevel::Info
+	    }
+
+	    fn log(&self, record: &LogRecord) {
+	        if self.enabled(record.metadata()) {
+	            println!("{} - {}", record.level(), record.args());
+	        }
+	    }
+	}
+
+	pub fn init() -> Result<(), SetLoggerError> {
+	    log::set_logger(|max_log_level| {
+	        max_log_level.set(LogLevelFilter::Info);
+	        Box::new(Logger)
+	    })
 	}
 }

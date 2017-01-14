@@ -6,8 +6,11 @@ license = "MIT/Apache-2.0"
 build = true
 
 [lib]
-crate-type = ["rlib", "dylib"]
+crate-type = ["dylib"]
 
 [dependencies]
 libloading = "0.3.1"
 log = "0.3.6"
+
+[dependencies.high]
+path = "high"
