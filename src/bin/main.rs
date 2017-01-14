@@ -6,7 +6,7 @@ extern crate libloading;
 
 use libloading::{Library, Symbol};
 use std::{env, mem, process, str};
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 #[cfg(target_os = "macos")]
 const DYNAMIC_LIBRARY_EXTENSION: &'static str = "dylib";
@@ -21,16 +21,16 @@ const SYMBOL: &'static [u8] = b"dyn_func";
 fn main() {
 	logger::init().expect("failed to initialize logger");
 
+	high::currentize(load_then_drop);
+}
+
+pub fn load_then_drop() {
+
 	let path_buf = {
 		let exe = env::current_exe().unwrap();
 		let directory = exe.parent().unwrap();
 		directory.join(DYNAMIC_LIBRARY_NAME).with_extension(DYNAMIC_LIBRARY_EXTENSION)
 	};
-
-	high::currentize(|| load_then_drop(&path_buf));
-}
-
-pub fn load_then_drop(path_buf: &PathBuf) {
 
 	let mut arguments = vec!["build"];
 
@@ -65,9 +65,9 @@ pub fn load_then_drop(path_buf: &PathBuf) {
 
 	} else {
 
-		//error!("{}", output.status);
+		error!("{}", output.status);
 		error!("{}", String::from_utf8_lossy(&output.stdout));
-		//error!("{}", String::from_utf8_lossy(&output.stderr));
+		error!("{}", String::from_utf8_lossy(&output.stderr));
 	}
 }
 

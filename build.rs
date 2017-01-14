@@ -24,6 +24,7 @@ fn copy(name: &str) -> io::Result<()> {
 
 	let _ = io::copy(&mut inp, &mut f)?;
 
+	writeln!(f, "")?;
 	writeln!(f, "Ok(())")?;
 	writeln!(f, "}}")?;
 

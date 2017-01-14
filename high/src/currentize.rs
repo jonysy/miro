@@ -1,7 +1,9 @@
 use capture::Capture;
 use current::{Current, CurrentGuard};
 use lychee::image::ImageBuffer;
-use piston_window::{Event, EventLoop, PistonWindow, Texture, TextureSettings, Window, WindowSettings};
+use piston_window::{Event, EventLoop};
+use piston_window::{PistonWindow, Window, WindowSettings};
+use piston_window::{Texture, TextureSettings};
 use gfx_device_gl::Resources;
 use std::{mem, thread};
 use std::time::Duration;

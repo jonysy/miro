@@ -5,6 +5,11 @@ authors = ["Jony <jonysy@users.noreply.github.com>"]
 license = "MIT/Apache-2.0"
 build = true
 
+# [workspace]
+# members = [
+# 	"current", "dynamic", "high"
+# ]
+
 [lib]
 crate-type = ["dylib"]
 
