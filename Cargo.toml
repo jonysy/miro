@@ -1,5 +1,5 @@
 [package]
-name = "mirage"
+name = "reflection"
 version = "0.2.0"
 authors = ["Jony <jonysy@users.noreply.github.com>"]
 license = "MIT/Apache-2.0"
