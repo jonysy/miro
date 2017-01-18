@@ -1,7 +1,7 @@
 use av_foundation::{AvCaptureVideoDataOutputSampleBufferDelegate, AvCaptureSession};
 use av_foundation::{AvCaptureDevice, AvCaptureDeviceInput, AvCaptureVideoDataOutput, AvMediaType};
 use dispatch::ffi::dispatch_queue_create;
-use lychee::image::{ImageBuffer, RgbaImage};
+use miro::image::{ImageBuffer, RgbaImage};
 use std::ffi::CString;
 use std::{mem, ptr};
 

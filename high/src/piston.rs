@@ -1,11 +1,11 @@
 use current::Current;
-use lychee::image::RgbaImage;
+use miro::image::RgbaImage;
 use piston_window::{self, Event, PistonWindow, Texture};
 
 /// # Example
 ///
 /// ```rust
-/// use mirage::piston;
+/// use high::piston;
 ///
 /// while piston::open() {
 ///
@@ -29,7 +29,7 @@ pub fn open() -> bool {
 /// # Example
 ///
 /// ```rust
-/// use mirage::piston;
+/// use high::piston;
 ///
 /// while piston::open() {
 ///

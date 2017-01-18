@@ -1,6 +1,6 @@
 use capture::Capture;
 use current::{Current, CurrentGuard};
-use lychee::image::ImageBuffer;
+use miro::image::ImageBuffer;
 use piston_window::{Event, EventLoop};
 use piston_window::{PistonWindow, Window, WindowSettings};
 use piston_window::{Texture, TextureSettings};

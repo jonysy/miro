@@ -2,7 +2,7 @@ pub(super) use self::av::Capture;
 mod av;
 
 use current::Current;
-use lychee::image::RgbaImage;
+use miro::image::RgbaImage;
 
 pub fn conn() {
 	let capture = unsafe { &mut *Current::<Capture>::new() };
