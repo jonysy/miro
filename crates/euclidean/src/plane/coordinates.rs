@@ -33,13 +33,13 @@ impl<I> fmt::Display for Coordinates<I> where I: fmt::Display {
 
 impl<I> From<(I, I)> for Coordinates<I> {
     fn from((x, y): (I, I)) -> Self {
-        Coordinates { x, y }
+        Coordinates { x: x, y: y }
     }
 }
 
 impl<I> From<[I; 2]> for Coordinates<I> {
     fn from([x, y]: [I; 2]) -> Self {
-        Coordinates { x, y }
+        Coordinates { x: x, y: y }
     }
 }
 

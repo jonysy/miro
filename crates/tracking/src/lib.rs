@@ -2,7 +2,7 @@
 
 extern crate lychee_core as core;
 extern crate lychee_euclidean as euclidean;
-extern crate lychee_ext as ext;
+extern crate lychee_extn as extn;
 extern crate lychee_image as image;
 extern crate extensions;
 

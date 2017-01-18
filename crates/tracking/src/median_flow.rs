@@ -1,6 +1,6 @@
 use core::error::{Error, TrackingErr};
 use euclidean::{Coordinates, Region};
-use ext::{FlowFn, Tracker, TrackFn};
+use extn::{FlowFn, Tracker, TrackFn};
 use extensions::statistics;
 use image::GrayImage;
 

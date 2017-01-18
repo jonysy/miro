@@ -39,13 +39,13 @@ impl<I> fmt::Display for Dimensions<I> where I: fmt::Display {
 
 impl<I> From<(I, I)> for Dimensions<I> {
     fn from((width, height): (I, I)) -> Self {
-        Dimensions { width, height }
+        Dimensions { width: width, height: height }
     }
 }
 
 impl<I> From<[I; 2]> for Dimensions<I> {
     fn from([width, height]: [I; 2]) -> Self {
-        Dimensions { width, height }
+        Dimensions { width: width, height: height }
     }
 }
 

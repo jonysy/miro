@@ -20,7 +20,7 @@ impl Error {
     pub fn new<E>(kind: Kind, e: E) -> Error
         where E: Into<Box<error::Error>> {
             
-        Error { kind, error: e.into() }
+        Error { kind: kind, error: e.into() }
     }
 }
 

@@ -2,8 +2,8 @@ mod util;
 
 use core::error::{Error, MotionErr};
 use euclidean::{Coordinates, Dimensions};
-use ext::{FlowFn, OpticFlow};
-use ext::motion::{CorrespondingPoints, Points};
+use extn::{FlowFn, OpticFlow};
+use extn::motion::{CorrespondingPoints, Points};
 use extensions::parcmp;
 use extensions::range::RangeInc;
 use linear::{Inv, Mat2, Vec2};

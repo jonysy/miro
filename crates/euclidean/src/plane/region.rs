@@ -13,10 +13,10 @@ pub struct Region<I = f64> {
 
 impl<I> Region<I> where I: Copy {
     pub fn new(x: I, y: I, width: I, height: I) -> Region<I> {
-        let coordinates = Coordinates { x, y };
-        let dimensions = Dimensions { width, height };
+        let coordinates = Coordinates { x: x, y: y };
+        let dimensions = Dimensions { width: width, height: height };
         
-        Region { coordinates, dimensions }    
+        Region { coordinates: coordinates, dimensions: dimensions }    
     }
     
     pub fn iter(&self) -> RegionIter<I> where I: Zero {
@@ -83,8 +83,8 @@ impl<I> Copy for Region<I> where I: Copy { }
 impl<I> From<(I, I, I, I)> for Region<I> {
     fn from((x, y, width, height): (I, I, I, I)) -> Region<I> {
         Region {
-            coordinates: Coordinates { x, y},
-            dimensions: Dimensions { width, height }
+            coordinates: Coordinates { x: x, y: y },
+            dimensions: Dimensions { width: width, height: height }
         }
     }
 }
@@ -92,8 +92,8 @@ impl<I> From<(I, I, I, I)> for Region<I> {
 impl<I> From<[I; 4]> for Region<I> {
     fn from([x, y, width, height]: [I; 4]) -> Region<I> {
         Region {
-            coordinates: Coordinates { x, y},
-            dimensions: Dimensions { width, height }
+            coordinates: Coordinates { x: x, y: y },
+            dimensions: Dimensions { width: width, height: height }
         }
     }
 }
@@ -154,7 +154,7 @@ impl<'a, I> RegionIter<'a, I> where I: 'a {
     fn new(region: &'a Region<I>) -> Self where I: Zero {
         let current = Coordinates { x: I::zero(), y: I::zero() };
         
-        RegionIter { current, region }
+        RegionIter { current: current, region: region }
     }
 }
 

@@ -1,4 +1,4 @@
-#![feature(field_init_shorthand, slice_patterns)]
+#![feature(slice_patterns)]
 
 extern crate num;
 
