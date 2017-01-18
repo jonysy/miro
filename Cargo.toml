@@ -1,5 +1,5 @@
 [package]
-name = "lychee"
+name = "mirage"
 description = "A modern computer vision library."
 version = "0.1.0"
 authors = ["Jony <jonysy@users.noreply.github.com>"]
