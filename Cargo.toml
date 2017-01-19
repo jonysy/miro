@@ -21,6 +21,10 @@ version = "0.1.*"
 path = "crates/euclidean"
 version = "0.1.*"
 
+[dependencies.lychee-extensions]
+path = "crates/extensions"
+version = "0.1.*"
+
 [dependencies.lychee-extn]
 path = "crates/extn"
 version = "0.1.*"

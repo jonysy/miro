@@ -4,7 +4,7 @@ extern crate lychee_core as core;
 extern crate lychee_euclidean as euclidean;
 extern crate lychee_extn as extn;
 extern crate lychee_image as image;
-extern crate extensions;
+extern crate lychee_extensions as extensions;
 
 pub use self::median_flow::MedianFlow;
 mod median_flow;

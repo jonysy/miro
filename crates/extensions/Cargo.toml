@@ -1,8 +1,8 @@
 [package]
-name = "extensions"
+name = "lychee-extensions"
 version = "0.1.0"
 authors = ["Jony <jonysy@users.noreply.github.com>"]
-license = "MIT"
+license = "MIT/Apache-2.0"
 
 [dependencies]
 num = "0.1.36"

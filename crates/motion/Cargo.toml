@@ -4,15 +4,16 @@ version = "0.1.0"
 authors = ["Jony <jonysy@users.noreply.github.com>"]
 license = "MIT/Apache-2.0"
 
-[dependencies]
-extensions = { git = "https://github.com/jonysy/extensions.git" }
-
 [dependencies.lychee-core]
 path = "../core"
 version = "0.1.0"
 
 [dependencies.lychee-euclidean]
 path = "../euclidean"
+version = "0.1.0"
+
+[dependencies.lychee-extensions]
+path = "../extensions"
 version = "0.1.0"
 
 [dependencies.lychee-extn]

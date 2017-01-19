@@ -6,7 +6,7 @@ extern crate lychee_euclidean as euclidean;
 extern crate lychee_extn as extn;
 extern crate lychee_linear as linear;
 extern crate lychee_image as image;
-extern crate extensions;
+extern crate lychee_extensions as extensions;
 
 pub use lucas_kanade::PyrLk;
 
