@@ -1,0 +1,8 @@
+[package]
+name = "extensions"
+version = "0.1.0"
+authors = ["Jony <jonysy@users.noreply.github.com>"]
+license = "MIT"
+
+[dependencies]
+num = "0.1.36"
