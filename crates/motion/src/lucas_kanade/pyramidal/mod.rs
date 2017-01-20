@@ -1,13 +1,14 @@
 mod util;
 
-use core::error::{Error, MotionErr};
-use euclidean::{Coordinates, Dimensions};
-use extn::{FlowFn, OpticFlow};
-use extn::motion::{CorrespondingPoints, Points};
-use extensions::parcmp;
-use extensions::range::RangeInc;
-use linear::{Inv, Mat2, Vec2};
 use image::GrayImage;
+use imageproc::math::{Mat2, Vec2};
+use lychee_core::error::{Error, MotionErr};
+use lychee_euclidean::{Coordinates, Dimensions};
+use lychee_extn::{FlowFn, OpticFlow};
+use lychee_extn::motion::{CorrespondingPoints, Points};
+use lychee_extensions::parcmp;
+use lychee_extensions::range::RangeInc;
+use nalgebra::Inv;
 
 /// Pyramidal Implementation of the Lucas Kanade Feature Tracker
 ///

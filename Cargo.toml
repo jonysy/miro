@@ -5,13 +5,8 @@ version = "0.1.0"
 authors = ["Jony <jonysy@users.noreply.github.com>"]
 license = "MIT/Apache-2.0"
 
-# [workspace]
-# members = [
-# 	"crates/core", "crates/euclidean", 
-# 	"crates/ext", "crates/image", 
-# 	"crates/linear", "crates/motion", 
-# 	"crates/tracking"
-# ]
+[workspace]
+members = ["crates/core", "crates/euclidean", "crates/extn", "crates/motion", "crates/tracking"]
 
 [dependencies.lychee-core]
 path = "crates/core"
@@ -27,14 +22,6 @@ version = "0.1.*"
 
 [dependencies.lychee-extn]
 path = "crates/extn"
-version = "0.1.*"
-
-[dependencies.lychee-image]
-path = "crates/image"
-version = "0.1.*"
-
-[dependencies.lychee-linear]
-path = "crates/linear"
 version = "0.1.*"
 
 [dependencies.lychee-motion]

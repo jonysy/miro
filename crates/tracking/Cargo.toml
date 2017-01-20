@@ -4,6 +4,9 @@ version = "0.1.0"
 authors = ["Jony <jonysy@users.noreply.github.com>"]
 license = "MIT/Apache-2.0"
 
+[dependencies]
+image = "0.12.1"
+
 [dependencies.lychee-core]
 path = "../core"
 version = "0.1.0"
@@ -18,8 +21,4 @@ version = "0.1.0"
 
 [dependencies.lychee-extn]
 path = "../extn"
-version = "0.1.0"
-
-[dependencies.lychee-image]
-path = "../image"
 version = "0.1.0"

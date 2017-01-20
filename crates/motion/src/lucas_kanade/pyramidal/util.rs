@@ -1,6 +1,6 @@
 use image::{GrayImage, Luma};
-use image::processing::definitions::Clamp;
-use image::processing::filter::Kernel;
+use imageproc::definitions::Clamp;
+use imageproc::filter::Kernel;
 
 /// Anti-aliasing filter kernel is used for pyramid construction (used for image anti-aliasing 
 /// before image subsampling).

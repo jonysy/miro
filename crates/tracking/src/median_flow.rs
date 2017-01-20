@@ -1,8 +1,8 @@
-use core::error::{Error, TrackingErr};
-use euclidean::{Coordinates, Region};
-use extn::{FlowFn, Tracker, TrackFn};
-use extensions::statistics;
 use image::GrayImage;
+use lychee_core::error::{Error, TrackingErr};
+use lychee_euclidean::{Coordinates, Region};
+use lychee_extn::{FlowFn, Tracker, TrackFn};
+use lychee_extensions::statistics;
 
 /// [Median Flow][1] tracker: A tracker based on [optical flow][2]
 ///

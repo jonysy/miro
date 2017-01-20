@@ -1,12 +1,13 @@
 //! Motion analysis
 #![feature(non_ascii_idents)]
 
-extern crate lychee_core as core;
-extern crate lychee_euclidean as euclidean;
-extern crate lychee_extn as extn;
-extern crate lychee_linear as linear;
-extern crate lychee_image as image;
-extern crate lychee_extensions as extensions;
+extern crate image;
+extern crate imageproc;
+extern crate lychee_core;
+extern crate lychee_euclidean;
+extern crate lychee_extn;
+extern crate lychee_extensions;
+extern crate nalgebra;
 
 pub use lucas_kanade::PyrLk;
 
