@@ -1,10 +1,10 @@
 use capture::Capture;
 use current::{Current, CurrentGuard};
-use miro::image::ImageBuffer;
+use gfx_device_gl::Resources;
+use image::ImageBuffer;
 use piston_window::{Event, EventLoop};
 use piston_window::{PistonWindow, Window, WindowSettings};
 use piston_window::{Texture, TextureSettings};
-use gfx_device_gl::Resources;
 use std::{mem, thread};
 use std::time::Duration;
 

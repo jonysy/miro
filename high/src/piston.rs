@@ -1,5 +1,5 @@
 use current::Current;
-use miro::image::RgbaImage;
+use image::RgbaImage;
 use piston_window::{self, Event, PistonWindow, Texture};
 
 /// # Example

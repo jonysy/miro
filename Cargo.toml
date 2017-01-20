@@ -19,3 +19,7 @@ log = "0.3.6"
 
 [dependencies.high]
 path = "high"
+
+[dependencies.miro]
+path = "../miro"
+version = "0.1.0"

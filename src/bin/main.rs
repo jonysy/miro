@@ -6,7 +6,6 @@ extern crate libloading;
 
 use libloading::{Library, Symbol};
 use std::{env, mem, process, str};
-use std::path::{Path, PathBuf};
 
 #[cfg(target_os = "macos")]
 const DYNAMIC_LIBRARY_EXTENSION: &'static str = "dylib";
