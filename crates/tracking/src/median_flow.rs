@@ -1,7 +1,7 @@
 use image::GrayImage;
 use lychee_core::error::{Error, TrackingErr};
 use lychee_euclidean::{Coordinates, Region};
-use lychee_extn::{FlowFn, Tracker, TrackFn};
+use lychee_extn::{Flow, Tracker, Track};
 use lychee_extensions::statistics;
 
 /// [Median Flow][1] tracker: A tracker based on [optical flow][2]
@@ -30,8 +30,8 @@ impl<F> Tracker for MedianFlow<F> {
     type Err = Error;
 }
 
-impl<F> TrackFn<GrayImage> for MedianFlow<F>
-    where F: FlowFn<GrayImage>, F::Err: 'static
+impl<F> Track<GrayImage> for MedianFlow<F>
+    where F: Flow<GrayImage>, F::Err: 'static
 {
     /// Median Flow tracker
     ///

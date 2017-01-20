@@ -4,7 +4,7 @@ use image::GrayImage;
 use imageproc::math::{Mat2, Vec2};
 use lychee_core::error::{Error, MotionErr};
 use lychee_euclidean::{Coordinates, Dimensions};
-use lychee_extn::{FlowFn, OpticFlow};
+use lychee_extn::{Flow, OpticFlow};
 use lychee_extn::motion::{CorrespondingPoints, Points};
 use lychee_extensions::parcmp;
 use lychee_extensions::range::RangeInc;
@@ -52,7 +52,7 @@ impl OpticFlow for PyrLk {
     type Err = Error;
 }
 
-impl FlowFn<GrayImage> for PyrLk {
+impl Flow<GrayImage> for PyrLk {
     
     /// Computes the optical flow.
     ///

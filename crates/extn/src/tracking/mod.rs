@@ -1,5 +1,5 @@
-pub use self::track_fn::TrackFn;
-mod track_fn;
+pub use self::track::Track;
+mod track;
 
 use std::error::Error;
 

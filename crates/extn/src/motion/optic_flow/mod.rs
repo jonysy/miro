@@ -1,9 +1,9 @@
 pub use self::corresponding_points::CorrespondingPoints;
-pub use self::flow_fn::FlowFn;
+pub use self::flow::Flow;
 pub use self::points::Points;
 
 mod corresponding_points;
-mod flow_fn;
+mod flow;
 mod points;
 
 use std::error::Error;
