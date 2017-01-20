@@ -6,8 +6,8 @@ use lychee_core::error::{Error, MotionErr};
 use lychee_euclidean::{Coordinates, Dimensions};
 use lychee_extn::{Flow, OpticFlow};
 use lychee_extn::motion::{CorrespondingPoints, Points};
-use lychee_extensions::parcmp;
-use lychee_extensions::range::RangeInc;
+use lychee_misc::parcmp;
+use lychee_misc::range::RangeInc;
 use nalgebra::Inv;
 
 /// Pyramidal Implementation of the Lucas Kanade Feature Tracker

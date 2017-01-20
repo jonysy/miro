@@ -6,7 +6,7 @@ extern crate imageproc;
 extern crate lychee_core;
 extern crate lychee_euclidean;
 extern crate lychee_extn;
-extern crate lychee_extensions;
+extern crate lychee_misc;
 extern crate nalgebra;
 
 pub use lucas_kanade::PyrLk;

@@ -2,7 +2,7 @@ use image::GrayImage;
 use lychee_core::error::{Error, TrackingErr};
 use lychee_euclidean::{Coordinates, Region};
 use lychee_extn::{Flow, Tracker, Track};
-use lychee_extensions::statistics;
+use lychee_misc::statistics;
 
 /// [Median Flow][1] tracker: A tracker based on [optical flow][2]
 ///

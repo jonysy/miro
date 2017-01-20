@@ -17,10 +17,10 @@ version = "0.1.0"
 path = "../euclidean"
 version = "0.1.0"
 
-[dependencies.lychee-extensions]
-path = "../extensions"
-version = "0.1.0"
-
 [dependencies.lychee-extn]
 path = "../extn"
+version = "0.1.0"
+
+[dependencies.lychee-misc]
+path = "../misc"
 version = "0.1.0"
