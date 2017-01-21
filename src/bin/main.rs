@@ -6,6 +6,7 @@ extern crate libloading;
 
 use libloading::{Library, Symbol};
 use std::{env, mem, process, str};
+use std::borrow::Cow;
 
 #[cfg(target_os = "macos")]
 const DYNAMIC_LIBRARY_EXTENSION: &'static str = "dylib";
@@ -51,7 +52,7 @@ pub fn load_then_drop() {
 
 		unsafe {
 
-			let func: Symbol<fn() -> Result<(), String>> = 
+			let func: Symbol<fn() -> Result<(), Cow<'static, str>>> = 
 				library.get(SYMBOL).expect("failed to get `fn`");
 
 			if let Err(message) = func() {

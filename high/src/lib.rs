@@ -18,3 +18,7 @@ pub mod piston;
 
 pub use self::currentize::currentize;
 mod currentize;
+
+const WIDTH: usize = 640;
+const HEIGHT: usize = 360;
+const NCH: usize = 4;

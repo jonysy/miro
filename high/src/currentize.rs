@@ -7,6 +7,7 @@ use piston_window::{PistonWindow, Window, WindowSettings};
 use piston_window::{Texture, TextureSettings};
 use std::{mem, thread};
 use std::time::Duration;
+use super::{WIDTH, HEIGHT};
 
 pub fn currentize<F>(func: F) where F: Fn() {
 
@@ -15,7 +16,7 @@ pub fn currentize<F>(func: F) where F: Fn() {
 		let settings = {
 
 			let title = "Mirage - Interactive";
-			let size = [1280, 720];
+			let size = [WIDTH as u32, HEIGHT as u32];
 
 			WindowSettings::new(title, size)
 						   .exit_on_esc(true)
@@ -35,7 +36,7 @@ pub fn currentize<F>(func: F) where F: Fn() {
 
 	let mut texture: Texture<Resources> = {
 
-		let buf = ImageBuffer::new(1280, 720);
+		let buf = ImageBuffer::new(WIDTH as u32, HEIGHT as u32);
 		let settings = TextureSettings::new();
 		let ref mut factory = window.factory;
 

@@ -1,30 +1,46 @@
 use high::{capture, piston};
+use miro::misc::parcmp;
+
+// use miro::extn::Flow;
+// use miro::motion::PyrLk;
+
+let mut pressed = false;
+let mut rectangle = [0.0, 0.0, 50.0, 50.0];
+let (width, height) = piston::window_size();
 
 capture::conn();
 
 'window: while piston::open() {
-	if piston::render() {
-		
-		let image = capture::read();
 
+	if piston::render() {
+
+		piston::clear([1.0; 4])?;
+		let image = capture::read();
 		piston::draw_image(&image)?;
+		piston::draw_rectangle([1.0, 0.0, 0.0, 1.0], rectangle)?;
 	}
 
-	if let Some(key) = piston::pressed_key() {
+	// =========
 
-		if key <= 255 {
+	if Some('r' as u64) == piston::pressed_key() {
 
-			match key as u8 as char {
-				'r' => {
-					
-					info!("reloading window");
-					break 'window; // will reload if the window is still open
-				},
+		info!("reloading window");
+		break 'window; // will reload if the window is still open
+	}
 
-				_ => {
+	if Some(1) == piston::pressed_mouse_button() || Some(1) == piston::released_mouse_button(){
 
-				}
-			}
+		info!("Left mouse button pressed/released");
+		pressed = !pressed;
+	}
+
+	if pressed {
+
+		if let Some(position) = piston::mouse_cursor_position() {
+			rectangle[0] = position[0];
+			rectangle[1] = position[1];
+
+			//println!("{:?}", position);
 		}
 	}
 }

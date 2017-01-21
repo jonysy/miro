@@ -4,6 +4,7 @@ use dispatch::ffi::dispatch_queue_create;
 use image::{ImageBuffer, RgbaImage};
 use std::ffi::CString;
 use std::{mem, ptr};
+use super::super::{WIDTH, HEIGHT, NCH};
 
 pub struct Capture {
 	super_: AvCaptureVideoDataOutputSampleBufferDelegate,
@@ -20,7 +21,9 @@ impl Capture {
 	pub(super::super) fn init() -> Capture {
 		info!("initializing capture delegate");
 
-		let super_ = AvCaptureVideoDataOutputSampleBufferDelegate::init();
+		let super_ = AvCaptureVideoDataOutputSampleBufferDelegate::init(
+			WIDTH as u32, HEIGHT as u32, NCH as u32
+		);
 
 		// A session is used to control the flow of the data from the input to the output device.
 		let mut session = AvCaptureSession::init();
@@ -65,7 +68,7 @@ impl Capture {
 
 		if session.canAddOutput(&data_output) {
 
-			data_output.set__videoSettings_default();
+			data_output.set__videoSettings_default(WIDTH as u32, HEIGHT as u32);
 
 			session.addOutput(data_output);
 		}
@@ -100,23 +103,20 @@ impl Capture {
 		self.conn = false;
 	}
 
+	/// [issue](https://github.com/PistonDevelopers/image/issues/451)
 	pub(super) fn frame(&self) -> RgbaImage {
 
-		let mut array: [u8; 4 * 1280 * 720] = unsafe { mem::uninitialized() };
+		let mut array: [u8; WIDTH * HEIGHT * NCH] = unsafe { mem::uninitialized() };
 
-		self.super_.frame(&mut array);
-
-		const WIDTH: usize = 1280;
-		const HEIGHT: usize = 720;
-		const NCHANNELS: usize = 4;
+		self.super_.frame(&mut array, WIDTH * HEIGHT * NCH);
 
 		// BGRA
 
 		for x in 0..(WIDTH - 1) {
 			for y in 0..(HEIGHT - 1) {
 
-				let i = NCHANNELS * (y * WIDTH + x);
-				let range = i..(i + NCHANNELS);
+				let i = NCH * (y * WIDTH + x);
+				let range = i..(i + NCH);
 
 				let slice: &mut [_] = &mut array[range];
 				slice.swap(0, 2);
