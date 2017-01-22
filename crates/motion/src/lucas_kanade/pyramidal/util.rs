@@ -1,14 +1,24 @@
 use image::{GrayImage, Luma};
 use imageproc::definitions::Clamp;
 use imageproc::filter::Kernel;
+use imageproc;
 
 /// Anti-aliasing filter kernel is used for pyramid construction (used for image anti-aliasing 
 /// before image subsampling).
 fn filter(im: &GrayImage) -> GrayImage {
     // [1/16 1/4 3/8 1/4 1/16] × [1/16 1/4 3/8 1/4 1/16]T
-    let slice = &[0.2734375];
-    let ker = Kernel::new(slice, 1, 1);
-    ker.filter(im, |channel, acc| *channel = Clamp::clamp(acc))
+
+    // let slice = &[0.2734375];
+    // let ker = Kernel::new(slice, 1, 1);
+    // ker.filter(im, |channel, acc| *channel = Clamp::clamp(acc))
+
+    let array = [
+        1.0/16.0,   1.0/8.0,    1.0/16.0,
+        1.0/8.0,    1.0/4.0,    1.0/8.0,
+        1.0/16.0,   1.0/8.0,    1.0/16.0
+    ];
+        
+    imageproc::filter::filter3x3(im, &array)
 }
 
 /// Builds a pyramid representation of the provided image.
@@ -25,12 +35,12 @@ fn filter(im: &GrayImage) -> GrayImage {
 ///
 /// Returns the pyramid representation of image `im`
 pub fn pyramid(im: &GrayImage, nlayers: usize) -> Vec<GrayImage> {
-    let mut vec = Vec::with_capacity(nlayers);
+    let mut pyramid = Vec::with_capacity(nlayers);
     
-    vec.push(im.clone());
+    pyramid.push(im.clone());
     
     for level in 1..nlayers {
-        let previous = filter(&vec[level - 1]);
+        let previous = filter(&pyramid[level - 1]);
         
         let (prev_w, prev_h) = previous.dimensions();
         
@@ -73,10 +83,10 @@ pub fn pyramid(im: &GrayImage, nlayers: usize) -> Vec<GrayImage> {
             curr.put_pixel(x, y, luma);
         }}
         
-        vec.push(curr);
+        pyramid.push(curr);
     }
     
-    vec
+    pyramid
 }
 
 fn safepx(im: &GrayImage, x: f32, y: f32) -> f32 {
@@ -86,7 +96,7 @@ fn safepx(im: &GrayImage, x: f32, y: f32) -> f32 {
     let x = x.min(w - 1.0).max(0.0) as u32;
     let y = y.min(h - 1.0).max(0.0) as u32;
 
-    im[(x, y)].data[0] as f32
+    im.get_pixel(x, y).data[0] as f32
 }
 
 /// Subpixel computation

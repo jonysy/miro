@@ -48,6 +48,18 @@ pub struct PyrLk {
     k: usize,
 }
 
+impl PyrLk {
+
+    pub fn new(nlayers: usize, win: u16, k: usize) -> PyrLk {
+
+        PyrLk {
+            nlayers: nlayers,
+            win: [win, win].into(),
+            k: k,
+        }
+    }
+}
+
 impl OpticFlow for PyrLk {
     type Err = Error;
 }
@@ -207,9 +219,10 @@ impl Flow<GrayImage> for PyrLk {
             
             // Location of point on image `J` (translation).
             let xJ = xI + flowf.x;
-            let yJ = xJ + flowf.y;
+            let yJ = yI + flowf.y;
             
             if parcmp::min(xJ, yJ) < 0.0 || xJ >= (wJ as f32) || yJ >= (hJ as f32) {
+                
                 corresponding_points.push(None);
                 continue;
             }
