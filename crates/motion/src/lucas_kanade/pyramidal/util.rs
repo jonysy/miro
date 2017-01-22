@@ -1,25 +1,14 @@
 use image::{GrayImage, Luma};
-use imageproc::definitions::Clamp;
-use imageproc::filter::Kernel;
-use imageproc;
+use imageproc::filter;
 
 /// Anti-aliasing filter kernel is used for pyramid construction (used for image anti-aliasing 
 /// before image subsampling).
-fn filter(im: &GrayImage) -> GrayImage {
+const KERNEL: [f64; 9] = [
     // [1/16 1/4 3/8 1/4 1/16] × [1/16 1/4 3/8 1/4 1/16]T
-
-    // let slice = &[0.2734375];
-    // let ker = Kernel::new(slice, 1, 1);
-    // ker.filter(im, |channel, acc| *channel = Clamp::clamp(acc))
-
-    let array = [
-        1.0/16.0,   1.0/8.0,    1.0/16.0,
-        1.0/8.0,    1.0/4.0,    1.0/8.0,
-        1.0/16.0,   1.0/8.0,    1.0/16.0
-    ];
-        
-    imageproc::filter::filter3x3(im, &array)
-}
+    1.0/16.0,   1.0/8.0,    1.0/16.0,
+    1.0/8.0,    1.0/4.0,    1.0/8.0,
+    1.0/16.0,   1.0/8.0,    1.0/16.0
+];
 
 /// Builds a pyramid representation of the provided image.
 ///
@@ -40,7 +29,7 @@ pub fn pyramid(im: &GrayImage, nlayers: usize) -> Vec<GrayImage> {
     pyramid.push(im.clone());
     
     for level in 1..nlayers {
-        let previous = filter(&pyramid[level - 1]);
+        let previous = filter::filter3x3(&pyramid[level - 1], &KERNEL);
         
         let (prev_w, prev_h) = previous.dimensions();
         
