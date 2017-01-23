@@ -167,3 +167,20 @@ pub fn draw_rectangle<R>(color: [f32; 4], region: R) -> Result<(), Cow<'static, 
 		});
 	})
 }
+
+/// Draws rectangle border.
+pub fn draw_border<R>(color: [f32; 4], region: R) -> Result<(), Cow<'static, str>> 
+	where R: Into<[f64; 4]> {
+
+	use piston_window::{DrawState, Rectangle};
+
+	let draw_state = DrawState::default();
+	let re = Rectangle::new_border(color, 1.0);
+
+	helper2(|window, event| {
+		window.draw_2d(event, |c, g| {
+
+			re.draw(region, &draw_state, c.transform, g);
+		});
+	})
+}

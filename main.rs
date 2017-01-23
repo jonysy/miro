@@ -1,8 +1,21 @@
 use high::{capture, piston};
+use image::ConvertBuffer;
+use miro::extn::Track;
+use miro::motion::PyramLucasKanade;
+use miro::tracking::MedianFlow;
 
-const COLOR: [f32; 4] = [1.0, 0.0, 0.0, 0.20];
+mod util {
+
+	include!(concat!("../main-", "util.rs"));
+}
+
+let mf = MedianFlow::<PyramLucasKanade>::default();
+
+let color = [0.8125, 0.8125, 0.8125, 0.75];
 let mut pressed = false;
 let mut rectangle = None::<[f64; 4]>;
+
+let mut images = [None, None];
 
 capture::conn();
 
@@ -11,51 +24,43 @@ capture::conn();
 	if piston::render() {
 
 		piston::clear([1.0; 4])?;
-		let image = capture::read();
-		piston::draw_image(&image)?;
 
-		if let Some(r) = rectangle {
+		let rgba_image = capture::read();
 
-			piston::draw_rectangle(COLOR, r)?
+		util::update_images(&mut images, rgba_image.convert());
+
+		piston::draw_image(&rgba_image)?;
+
+		match &mut rectangle {
+			&mut Some(ref mut r) => {
+
+				piston::draw_border(color, *r)?;
+
+				if !pressed {
+
+					if let [Some(ref imI), Some(ref imJ)] = images {
+
+						if let Ok(re) = mf.track(imI, (*r).into(), imJ) {
+
+							*r = re.into();
+						}
+					}
+				}
+			},
+
+			_ => {
+
+			}
 		}
 	}
 
-	// =========
+	util::update_drag(&mut pressed, &mut rectangle);
 
 	if Some('r' as u64) == piston::pressed_key() {
 
 		info!("reloading window");
-		break 'window; // will reload if the window is still open
+		break 'window;
 	}
-
-	if Some(1) == piston::pressed_mouse_button() || Some(1) == piston::released_mouse_button(){
-
-		info!("Left mouse button pressed/released");
-		if !pressed { rectangle = None; }
-		pressed = !pressed;
-	}
-
-	update_drag_state(pressed, &mut rectangle);
 }
 
 capture::disconn();
-
-fn update_drag(pressed: bool, rectangle: &mut Option<[f64; 4]>) {
-	if pressed {
-
-		if let Some(position) = piston::mouse_cursor_position() {
-
-			match rectangle {
-				&mut Some([x, y, ref mut dim..]) => {
-
-					dim[0] = position[0] - x;
-					dim[1] = position[1] - y;
-				},
-
-				r @ _ => {
-					*r = Some([position[0], position[1], 0.0, 0.0]);
-				}
-			}
-		}
-	}
-}

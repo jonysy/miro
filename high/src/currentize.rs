@@ -30,8 +30,8 @@ pub fn currentize<F>(func: F) where F: Fn() {
 
 		settings.build::<PistonWindow>()
 				.unwrap_or_else(closure)
-				.ups(60)
-				.max_fps(60)
+				.ups(1)
+				.max_fps(10)
 	};
 
 	let mut texture: Texture<Resources> = {

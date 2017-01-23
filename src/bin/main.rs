@@ -5,7 +5,7 @@ extern crate high;
 extern crate libloading;
 
 use libloading::{Library, Symbol};
-use std::{env, mem, process, str};
+use std::{env, fs, mem, process, str, thread, time};
 use std::borrow::Cow;
 
 #[cfg(target_os = "macos")]
@@ -68,6 +68,28 @@ pub fn load_then_drop() {
 		error!("{}", output.status);
 		error!("{}", String::from_utf8_lossy(&output.stdout));
 		error!("{}", String::from_utf8_lossy(&output.stderr));
+
+		wait_for_changes();
+	}
+}
+
+fn wait_for_changes() {
+	const SCRIPT_PATH: &'static str = concat!(env!("CARGO_MANIFEST_DIR"), "/main.rs");
+
+	info!("waiting for changes");
+
+	let last_modified = fs::metadata(SCRIPT_PATH).unwrap().modified().unwrap();
+	let dur = time::Duration::from_secs(2);
+
+	loop {
+		thread::sleep(dur);
+
+		if let Ok(Ok(modified)) = fs::metadata(SCRIPT_PATH).map(|m| m.modified()) {
+
+	        if modified > last_modified {
+				break
+	        }
+	    }
 	}
 }
 
