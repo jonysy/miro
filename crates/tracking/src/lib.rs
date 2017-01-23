@@ -1,4 +1,4 @@
-#![feature(field_init_shorthand, inclusive_range_syntax, non_ascii_idents)]
+#![feature(non_ascii_idents)]
 
 extern crate image;
 extern crate lychee_core;

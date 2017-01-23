@@ -21,7 +21,7 @@ use nalgebra::Inv;
 /// 
 /// [1]: (http://robots.stanford.edu/cs223b04/algo_tracking.pdf)
 #[allow(non_snake_case)]
-pub struct PyrLk {
+pub struct PyramLucasKanade {
     /// The height (# of layers) of the image pyramid.
     ///
     /// ## Notes
@@ -48,11 +48,11 @@ pub struct PyrLk {
     k: usize,
 }
 
-impl PyrLk {
+impl PyramLucasKanade {
 
-    pub fn new(nlayers: usize, win: u16, k: usize) -> PyrLk {
+    pub fn new(nlayers: usize, win: u16, k: usize) -> PyramLucasKanade {
 
-        PyrLk {
+        PyramLucasKanade {
             nlayers: nlayers,
             win: [win, win].into(),
             k: k,
@@ -60,11 +60,11 @@ impl PyrLk {
     }
 }
 
-impl OpticFlow for PyrLk {
+impl OpticFlow for PyramLucasKanade {
     type Err = Error;
 }
 
-impl Flow<GrayImage> for PyrLk {
+impl Flow<GrayImage> for PyramLucasKanade {
     
     /// Computes the optical flow.
     ///
@@ -175,7 +175,8 @@ impl Flow<GrayImage> for PyrLk {
                 }}
                 
                 // The inverse spatial gradient matrix
-                let HpyrI_inv = HpyrI.inv().unwrap();
+                let HpyrI_inv = HpyrI.inv() // TODO return `None` instead?
+                    .ok_or(Error::new(MotionErr, "An error occurred while inverting a matrix"))?;
                 
                 // Initialization of iterative L-K
                 let mut flowlk = Vec2::new(0.0, 0.0);
@@ -237,11 +238,11 @@ impl Flow<GrayImage> for PyrLk {
     }
 }
 
-impl Default for PyrLk {
+impl Default for PyramLucasKanade {
     
-    /// Constructs a new `PyrLk` using the default `nlayers` and `win` parameters.
+    /// Constructs a new `PyramLucasKanade` using the default `nlayers` and `win` parameters.
     fn default() -> Self {
-        PyrLk {
+        PyramLucasKanade {
             nlayers: 4,
             win: [7, 7].into(),
             k: 4,

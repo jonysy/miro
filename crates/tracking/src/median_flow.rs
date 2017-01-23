@@ -13,7 +13,7 @@ pub struct MedianFlow<F> { algorithm: F, λ: usize }
 impl<F> MedianFlow<F> {
     
     pub fn new(algorithm: F, density: usize) -> Self {
-        MedianFlow { algorithm, λ: density }
+        MedianFlow { algorithm: algorithm, λ: density }
     }
 }
 
@@ -22,7 +22,7 @@ impl<F> Default for MedianFlow<F> where F: Default {
     fn default() -> Self {
         let algorithm = Default::default();
         
-        MedianFlow { algorithm, λ: 10 }
+        MedianFlow { algorithm: algorithm, λ: 10 }
     }
 }
 
@@ -46,31 +46,28 @@ impl<F> Track<GrayImage> for MedianFlow<F>
     /// Returns the bounding box at `t + 1`.
     #[allow(non_snake_case)]
     fn track(&self, imI: &GrayImage, region: Region, imJ: &GrayImage) -> Result<Region, Self::Err> {
-        let (originx, originy, width, height) = region.into();
-        
-        // A set of points is initialized on a rectangular grid within the `region`.
+        // TODO forward-backwards tracking
+
+        let ρ = self.λ * self.λ;
+
+        let mut pointsI = Vec::with_capacity(ρ);
+
+        let (xregion, yregion, wregion, hregion) = region.into();
+
+        // Generate a set of points on a `λ x λ` rectangular grid within the `region`.
         //
         // These points are then tracked by Lucas-Kanade tracker which generates a sparse motion 
-        // flow between imI and imJ.
+        // flow between `imI` and `imJ`.
         
-        let res_x = width / self.λ as f64;
-        let res_y = height / self.λ as f64;
+        let λ_x = wregion / self.λ as f64;
+        let λ_y = hregion / self.λ as f64;
         
-        let ρ = self.λ * self.λ;
-        
-        let mut pointsI = Vec::with_capacity(ρ);
-        
-        for x in 1...self.λ { for y in 1...self.λ {
+        for x in (0..self.λ).map(|x| (xregion + (x + 1) as f64 * λ_x) as f32) {
+            for y in (0..self.λ).map(|y| (yregion + (y + 1) as f64 * λ_y) as f32) {
             
-            let (x, y) = (x as f64, y as f64);
-            
-            let pointI = Coordinates {
-                x: (originx + x * res_x) as f32,
-                y: (originy + y * res_y) as f32
-            };
-            
-            pointsI.push(pointI);
-        }}
+                pointsI.push(Coordinates { x: x, y: y });
+            }
+        }
         
         let pointsJ = {
             self.algorithm
@@ -78,55 +75,65 @@ impl<F> Track<GrayImage> for MedianFlow<F>
                 .map_err(|err| Error::new(TrackingErr, err))?
         };
         
-        let mut δxs = Vec::with_capacity(self.λ);
-        let mut δys = Vec::with_capacity(self.λ);
-        
-        for (pointI, optional_pointJ) in pointsI.iter().zip(pointsJ.iter()) {
+        // calculate medians
+        let (mxδ, myδ, mxC, myC) = {
+
+            let mut δxs = Vec::with_capacity(ρ);
+            let mut δys = Vec::with_capacity(ρ);
+
+            let capacity = (0..ρ).fold(0, |sum, n| sum + n);
+            let mut xscales = Vec::with_capacity(capacity);
+            let mut yscales = Vec::with_capacity(capacity);
             
-            if let &Some(pointJ) = optional_pointJ {
-                let &Coordinates { x: xI, y: yI } = pointI;
-                let Coordinates { x: xJ, y: yJ } = pointJ;
+            for m in 0..ρ {
+                if let Some(pointJ_m) = pointsJ[m] {
 
-                let δx = xJ - xI;
-                let δy = yJ - yI;
+                    let Coordinates { x: pointI_m_x, y: pointI_m_y } = pointsI[m];
+                    let Coordinates { x: pointJ_m_x, y: pointJ_m_y } = pointJ_m;
 
-                δxs.push(δx);
-                δys.push(δy);
-            }
-        }
-        
-        let medianX = statistics::median(&mut δxs) as f64;
-        let medianY = statistics::median(&mut δys) as f64;
-        
-        let mut scales = Vec::with_capacity((1..ρ).fold(0, |sum, n| sum + n));
-        
-        for m in 0..ρ { for n in (m + 1)..ρ {
-            if let (Some(pointJ_m), Some(pointJ_n)) = (pointsJ[m], pointsJ[n]) {
-                let δxI = pointsI[n].x - pointsI[m].x;
-                let δyI = pointsI[n].y - pointsI[m].y;
-                    
-                let δxJ = pointJ_n.x - pointJ_m.y;
-                let δyJ = pointJ_n.y - pointJ_m.y;
-                    
-                let δI = (δxI * δxI + δyI * δyI).sqrt();
-                let δJ = (δxJ * δxJ + δyJ * δyJ).sqrt();
-                
-                if δI != 0.0 && δJ != 0.0 {
-                    scales.push(δJ / δI);
+                    let δx = pointJ_m_x - pointI_m_x;
+                    let δy = pointJ_m_y - pointI_m_y;
+
+                    δxs.push(δx);
+                    δys.push(δy);
+
+                    for n in (m + 1)..ρ {
+                        if let Some(pointJ_n) = pointsJ[n] {
+                            // scale
+                            let δxI = pointsI[n].x - pointI_m_x;
+                            let δyI = pointsI[n].y - pointI_m_y;
+                                
+                            let δxJ = pointJ_n.x - pointJ_m_x;
+                            let δyJ = pointJ_n.y - pointJ_m_y;
+
+                            if δxI != 0. && δyI != 0. && δxJ != 0. && δyJ != 0. {
+                                // ^^ignore zero values
+
+                                xscales.push(δxJ / δxI);
+                                yscales.push(δyJ / δyI);
+                            }
+                        }
+                    }
                 }
             }
-        }}
-        
-        let medianS = statistics::median(&mut scales) as f64;
-        
-        let offsetX = width * (medianS - 1.0);
-        let offsetY = height * (medianS - 1.0);
-        
-        let trajIJ = [
-            offsetX + originx, offsetY + originy,
-            width + (-offsetX * 0.5 + medianX), height + (-offsetY * 0.5 + medianY)
-        ].into();
-        
-        Ok(trajIJ)
+
+            (
+                statistics::median(&mut δxs) as f64,
+                statistics::median(&mut δys) as f64,
+
+                statistics::median(&mut xscales) as f64,
+                statistics::median(&mut yscales) as f64
+            )
+        };
+
+        let xoffset = wregion * mxC - wregion;
+        let yoffset = hregion * myC - hregion;
+
+        let x = xregion - xoffset / 2.0 + mxδ;
+        let y = yregion - yoffset / 2.0 + myδ;
+        let width = wregion + xoffset;
+        let height = hregion + yoffset;
+
+        Ok([x, y, width, height].into())
     }
 }

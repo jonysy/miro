@@ -1,6 +1,6 @@
 /// A list of error categories.
 #[derive(Debug)]
-pub enum Kind {    
+pub enum Kind {
     Motion,
     Tracking,
     

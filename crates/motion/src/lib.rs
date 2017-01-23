@@ -9,6 +9,6 @@ extern crate lychee_extn;
 extern crate lychee_misc;
 extern crate nalgebra;
 
-pub use lucas_kanade::PyrLk;
+pub use lucas_kanade::PyramLucasKanade;
 
 mod lucas_kanade;
