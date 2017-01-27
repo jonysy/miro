@@ -1,8 +1,8 @@
 use image::GrayImage;
-use lychee_core::error::{Error, TrackingErr};
-use lychee_euclidean::{Coordinates, Region};
-use lychee_extn::{Flow, Tracker, Track};
-use lychee_misc::statistics;
+use miro_core::error::{Error, TrackingErr};
+use miro_euclidean::{Coordinates, Region};
+use miro_extn::{Flow, Tracker, Track};
+use miro_misc::statistics;
 
 /// [Median Flow][1] tracker: A tracker based on [optical flow][2]
 ///

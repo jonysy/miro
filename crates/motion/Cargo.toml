@@ -1,5 +1,5 @@
 [package]
-name = "lychee-motion"
+name = "miro-motion"
 version = "0.1.0"
 authors = ["Jony <jonysy@users.noreply.github.com>"]
 license = "MIT/Apache-2.0"
@@ -9,18 +9,18 @@ image = "0.12.1"
 imageproc = "0.7.0"
 nalgebra = "0.5.1"
 
-[dependencies.lychee-core]
+[dependencies.miro-core]
 path = "../core"
 version = "0.1.0"
 
-[dependencies.lychee-euclidean]
+[dependencies.miro-euclidean]
 path = "../euclidean"
 version = "0.1.0"
 
-[dependencies.lychee-extn]
+[dependencies.miro-extn]
 path = "../extn"
 version = "0.1.0"
 
-[dependencies.lychee-misc]
+[dependencies.miro-misc]
 path = "../misc"
 version = "0.1.0"

@@ -1,4 +1,4 @@
-extern crate lychee_euclidean as euclidean;
+extern crate miro_euclidean as euclidean;
 
 pub mod motion;
 

@@ -2,12 +2,12 @@ mod util;
 
 use image::GrayImage;
 use imageproc::math::{Mat2, Vec2};
-use lychee_core::error::{Error, MotionErr};
-use lychee_euclidean::{Coordinates, Dimensions};
-use lychee_extn::{Flow, OpticFlow};
-use lychee_extn::motion::{CorrespondingPoints, Points};
-use lychee_misc::parcmp;
-use lychee_misc::range::RangeInc;
+use miro_core::error::{Error, MotionErr};
+use miro_euclidean::{Coordinates, Dimensions};
+use miro_extn::{Flow, OpticFlow};
+use miro_extn::motion::{CorrespondingPoints, Points};
+use miro_misc::parcmp;
+use miro_misc::range::RangeInc;
 use nalgebra::Inv;
 
 /// Pyramidal Implementation of the Lucas Kanade Feature Tracker

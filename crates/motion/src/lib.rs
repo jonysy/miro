@@ -3,10 +3,10 @@
 
 extern crate image;
 extern crate imageproc;
-extern crate lychee_core;
-extern crate lychee_euclidean;
-extern crate lychee_extn;
-extern crate lychee_misc;
+extern crate miro_core;
+extern crate miro_euclidean;
+extern crate miro_extn;
+extern crate miro_misc;
 extern crate nalgebra;
 
 pub use lucas_kanade::PyramLucasKanade;
