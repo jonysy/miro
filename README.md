@@ -2,6 +2,8 @@
 
 A crate for rapid prototyping and analysis of computer vision algorithms.
 
+[![Join the chat at https://gitter.im/lychee-eng/miro](https://badges.gitter.im/lychee-eng/miro.svg)](https://gitter.im/lychee-eng/miro?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ## Concept
 
 This project borrows the idea of ["high level"][high-level-post] libraries and applies it to mīrō.
