@@ -1,9 +1,5 @@
 pub use self::track::Track;
+pub use self::tracker::Tracker;
+
 mod track;
-
-use std::error::Error;
-
-pub trait Tracker {
-    
-    type Err: Error;
-}
+mod tracker;

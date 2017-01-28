@@ -7,8 +7,8 @@ license = "MIT/Apache-2.0"
 
 [workspace]
 members = [
-	"crates/classification", "crates/core", "crates/euclidean", "crates/extn", 
-	"crates/misc", "crates/motion", "crates/tracking"
+	"crates/classification", "crates/core", "crates/detection", "crates/euclidean", "crates/extn", 
+	"crates/image", "crates/misc", "crates/motion", "crates/tracking"
 ]
 
 [dependencies.miro-classification]
@@ -19,12 +19,20 @@ version = "0.1.*"
 path = "crates/core"
 version = "0.1.*"
 
+[dependencies.miro-detection]
+path = "crates/detection"
+version = "0.1.*"
+
 [dependencies.miro-euclidean]
 path = "crates/euclidean"
 version = "0.1.*"
 
 [dependencies.miro-extn]
 path = "crates/extn"
+version = "0.1.*"
+
+[dependencies.miro-image]
+path = "crates/image"
 version = "0.1.*"
 
 [dependencies.miro-misc]

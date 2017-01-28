@@ -1,11 +1,10 @@
 mod util;
 
-use image::GrayImage;
-use imageproc::math::{Mat2, Vec2};
 use miro_core::error::{Error, MotionErr};
 use miro_euclidean::{Coordinates, Dimensions};
-use miro_extn::{Flow, OpticFlow};
-use miro_extn::motion::{CorrespondingPoints, Points};
+use miro_extn::{CorrespondingPoints, Flow, OpticFlow, Points};
+use miro_image::{GrayImage, GrayPyramid};
+use miro_image::math::{Mat2, Vec2};
 use miro_misc::parcmp;
 use miro_misc::range::RangeInc;
 use nalgebra::Inv;
@@ -60,6 +59,18 @@ impl PyramLucasKanade {
     }
 }
 
+impl Default for PyramLucasKanade {
+    
+    /// Constructs a new `PyramLucasKanade` using the default `nlayers` and `win` parameters.
+    fn default() -> Self {
+        PyramLucasKanade {
+            nlayers: 4,
+            win: [7, 7].into(),
+            k: 4,
+        }
+    }
+}
+
 impl OpticFlow for PyramLucasKanade {
     type Err = Error;
 }
@@ -78,7 +89,6 @@ impl Flow<GrayImage> for PyramLucasKanade {
     /// * `imI` - The first grayscale image.
     /// * `pointsI` - Tracked points from the first grayscale image.
     /// * `imJ` - The second grayscale image.
-    ///
     ///
     /// ## Returns
     ///
@@ -103,14 +113,24 @@ impl Flow<GrayImage> for PyramLucasKanade {
     fn flow(&self, imI: &GrayImage, pointsI: &Points, imJ: &GrayImage)
         -> Result<CorrespondingPoints, Self::Err>
     {
-        
-        let (wJ, hJ) = imJ.dimensions();
-        
-        let mut corresponding_points = Vec::with_capacity(pointsI.len());
-        
         let pyrI = util::pyramid(imI, self.nlayers);
             
         let pyrJ = util::pyramid(imJ, self.nlayers);
+        
+        self.flow(&pyrI, pointsI, &pyrJ)
+    }
+}
+
+
+impl Flow<GrayPyramid> for PyramLucasKanade {
+    
+    #[allow(non_snake_case)]
+    fn flow(&self, pyrI: &GrayPyramid, pointsI: &Points, pyrJ: &GrayPyramid)
+        -> Result<CorrespondingPoints, Self::Err>
+    {
+        let (wJ, hJ) = pyrJ[0].dimensions();
+        
+        let mut corresponding_points = Vec::with_capacity(pointsI.len());
             
         for pointI in pointsI {
             let &Coordinates { x: xI, y: yI } = pointI;
@@ -235,17 +255,5 @@ impl Flow<GrayImage> for PyramLucasKanade {
         }
             
         Ok(corresponding_points)
-    }
-}
-
-impl Default for PyramLucasKanade {
-    
-    /// Constructs a new `PyramLucasKanade` using the default `nlayers` and `win` parameters.
-    fn default() -> Self {
-        PyramLucasKanade {
-            nlayers: 4,
-            win: [7, 7].into(),
-            k: 4,
-        }
     }
 }

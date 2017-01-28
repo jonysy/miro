@@ -2,5 +2,23 @@
 name = "miro-classification"
 version = "0.1.0"
 authors = ["Jony <jonysy@users.noreply.github.com>"]
+license = "MIT/Apache-2.0"
 
 [dependencies]
+rand = "0.3.15"
+
+[dependencies.miro-core]
+path = "../core"
+version = "0.1.0"
+
+[dependencies.miro-euclidean]
+path = "../euclidean"
+version = "0.1.0"
+
+[dependencies.miro-extn]
+path = "../extn"
+version = "0.1.0"
+
+[dependencies.miro-image]
+path = "../image"
+version = "0.1.0"

@@ -1,5 +1,5 @@
-use image::{GrayImage, Luma};
-use imageproc::filter;
+use miro_image::{GrayImage, GrayPyramid, Luma, Pyramid};
+use miro_image::filter;
 
 /// Anti-aliasing filter kernel is used for pyramid construction (used for image anti-aliasing 
 /// before image subsampling).
@@ -23,13 +23,9 @@ const KERNEL: [f64; 9] = [
 /// # Returns
 ///
 /// Returns the pyramid representation of image `im`
-pub fn pyramid(im: &GrayImage, nlayers: usize) -> Vec<GrayImage> {
-    let mut pyramid = Vec::with_capacity(nlayers);
-    
-    pyramid.push(im.clone());
-    
-    for level in 1..nlayers {
-        let previous = filter::filter3x3(&pyramid[level - 1], &KERNEL);
+pub fn pyramid(im: &GrayImage, nlayers: usize) -> GrayPyramid {
+    Pyramid::new(im.clone(), nlayers, |prev| {
+        let previous = filter::filter3x3(prev, &KERNEL);
         
         let (prev_w, prev_h) = previous.dimensions();
         
@@ -71,11 +67,9 @@ pub fn pyramid(im: &GrayImage, nlayers: usize) -> Vec<GrayImage> {
 
             curr.put_pixel(x, y, luma);
         }}
-        
-        pyramid.push(curr);
-    }
-    
-    pyramid
+
+        curr
+    })
 }
 
 fn safepx(im: &GrayImage, x: f32, y: f32) -> f32 {

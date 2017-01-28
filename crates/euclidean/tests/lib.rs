@@ -1,5 +1,5 @@
 #![cfg(test)]
 
-extern crate caribou_euclidean as euclidean;
+extern crate miro_euclidean as euclidean;
 
 mod plane;

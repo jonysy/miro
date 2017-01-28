@@ -1,4 +1,4 @@
-/// A list of error categories.
+/// A list specifying general error categories.
 #[derive(Debug)]
 pub enum Kind {
     Motion,
