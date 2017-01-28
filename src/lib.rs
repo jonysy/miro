@@ -4,7 +4,6 @@
 extern crate log;
 
 extern crate high;
-extern crate image;
 extern crate miro;
 
 use std::borrow::Cow;

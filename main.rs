@@ -1,6 +1,6 @@
 use high::{capture, piston};
-use image::ConvertBuffer;
 use miro::extn::Track;
+use miro::image::ConvertBuffer;
 use miro::motion::PyramLucasKanade;
 use miro::tracking::MedianFlow;
 
