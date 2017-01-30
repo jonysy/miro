@@ -1,9 +1,13 @@
 [package]
 name = "miro"
+categories = ["science"]
 description = "A modern computer vision library."
 version = "0.1.0"
 authors = ["Jony <jonysy@users.noreply.github.com>"]
 license = "MIT/Apache-2.0"
+
+[badges]
+travis-ci = { repository = "lychee-eng/miro" }
 
 [workspace]
 members = [

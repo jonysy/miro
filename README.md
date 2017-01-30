@@ -1,12 +1,12 @@
-A modern, open, high-performance computer vision library.
+miro
+====
 
 [![Build Status](https://travis-ci.org/lychee-eng/miro.svg?branch=master)](https://travis-ci.org/lychee-eng/miro)
 [![License](https://img.shields.io/crates/l/miro.svg)](LICENSE)
 [![Join the chat at https://gitter.im/lychee-eng/miro](https://badges.gitter.im/lychee-eng/miro.svg)](https://gitter.im/lychee-eng/miro?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-## Introduction
-
-A modern, (soon to be) GPU-accelerated computer vision library providing state-of-the-art implementations and performance.
+A modern, open, high-performance, ([soon to be](/../../issues/5)) GPU-accelerated computer vision 
+library providing state-of-the-art implementations and performance.
 
 ## Philosophy
 
@@ -22,8 +22,6 @@ Includes references, pseudo-code, brief descriptions illustrating the concept of
 ## Ecosystem
 
 See the [issues](/../../issues) page for a list of features planned or in development.
-
-μcrates:
 
 - [classification](/../../issues/18)
 - [detection](/../../issues/21)
