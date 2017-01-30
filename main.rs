@@ -1,5 +1,6 @@
 use high::{capture, piston};
 use miro::extn::Track;
+use miro::detection::window::slide;
 use miro::image::ConvertBuffer;
 use miro::motion::PyramLucasKanade;
 use miro::tracking::MedianFlow;
