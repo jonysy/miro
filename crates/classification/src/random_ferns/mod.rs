@@ -6,7 +6,7 @@ mod fern;
 
 use miro_error::Never;
 use miro_euclidean::Region;
-use miro_extn::{Classifier, SupervisedMut};
+use miro_extn::SupervisedMut;
 use miro_image::{GrayImage, GrayPyramid, IntegralImage};
 use rand::Rng;
 
@@ -44,15 +44,11 @@ impl<T> RandomFerns<T> {
 	}
 }
 
-impl<T> Classifier for RandomFerns<T> {
-
+impl SupervisedMut<IntegralImage> for RandomFerns {
 	/// `RandomFerns` should never return an error.
 	type Err = Never;
-}
 
-impl SupervisedMut<IntegralImage> for RandomFerns {
-
-	fn train<R, I>(&mut self, integral_image: &IntegralImage, region: R, label: I) -> Result<(), Self::Err>
+	fn train_mut<R, I>(&mut self, integral_image: &IntegralImage, region: R, label: I) -> Result<(), Self::Err>
 		where R: Into<Option<Region>>,
 			  I: Into<usize>
 	{
@@ -62,8 +58,10 @@ impl SupervisedMut<IntegralImage> for RandomFerns {
 }
 
 impl<T> SupervisedMut<GrayImage> for RandomFerns<T> {
+	/// `RandomFerns` should never return an error.
+	type Err = Never;
 
-	fn train<R, I>(&mut self, _: &GrayImage, _: R, _: I) -> Result<(), Self::Err>
+	fn train_mut<R, I>(&mut self, _: &GrayImage, _: R, _: I) -> Result<(), Self::Err>
 		where R: Into<Option<Region>>,
 			  I: Into<usize>
 	{
@@ -82,8 +80,10 @@ impl<T> SupervisedMut<GrayImage> for RandomFerns<T> {
 }
 
 impl<T> SupervisedMut<GrayPyramid> for RandomFerns<T> {
+	/// `RandomFerns` should never return an error.
+	type Err = Never;
 
-	fn train<R, I>(&mut self, _: &GrayPyramid, _: R, _: I) -> Result<(), Self::Err>
+	fn train_mut<R, I>(&mut self, _: &GrayPyramid, _: R, _: I) -> Result<(), Self::Err>
 		where R: Into<Option<Region>>,
 			  I: Into<usize>
 	{

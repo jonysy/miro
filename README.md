@@ -28,11 +28,11 @@ $ cargo [check | build | test] -p miro-[μcrate name] # e.g., cargo test -p miro
 
 #### All crates in the workspace
 
+[Issue#2878](https://github.com/rust-lang/cargo/issues/2878)
+
 ```sh
 $ cargo [check | build | test] --all # e.g., cargo test --all
 ```
-
-[issue#2878](https://github.com/rust-lang/cargo/issues/2878)
 
 ## Quick-start
 
@@ -50,21 +50,6 @@ nightly (`$ rustup run nightly [command]`), you should switch to nightly:
 
 ```sh
 $ rustup default nightly
-```
-
-### Usage
-
-```toml
-[dependencies.miro]
-version = ..
-```
-
-```rust
-extern crate miro;
-
-fn main() {
-	...
-}
 ```
 
 ## License

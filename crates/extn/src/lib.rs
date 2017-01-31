@@ -1,8 +1,8 @@
-extern crate miro_euclidean as euclidean;
+extern crate miro_euclidean;
 
-pub use classification::{Classifier, Supervised, SupervisedMut, Unsupervised, UnsupervisedMut};
-pub use motion::{CorrespondingPoints, Flow, OpticFlow, Points};
-pub use tracking::{Tracker, Track};
+pub use classification::{Supervised, SupervisedMut, Unsupervised, UnsupervisedMut};
+pub use motion::{OpticFlow, OpticFlowMut};
+pub use tracking::{Track, TrackMut};
 
 mod classification;
 mod motion;

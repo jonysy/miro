@@ -3,8 +3,9 @@ use super::Error;
 
 /// The `Never` type
 ///
-/// `Never` represents the type of a value that can never exist and will be 
-/// removed in the near future (issue: tracking issue for promoting `!` to a type [RFC 1216]).
+/// The `Never` type is an uninhabited type and represents the type of a value that can never 
+/// exist. The never type, `!`, will be used in the near future (issue: tracking issue for 
+/// promoting `!` to a type [RFC 1216]).
 #[derive(Debug)]
 pub enum Never { }
 

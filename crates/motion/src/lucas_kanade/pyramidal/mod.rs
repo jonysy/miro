@@ -2,7 +2,7 @@ mod util;
 
 use miro_error::{Error, MotionCategory};
 use miro_euclidean::{Coordinates, Dimensions};
-use miro_extn::{CorrespondingPoints, Flow, OpticFlow, Points};
+use miro_extn::OpticFlow;
 use miro_image::{GrayImage, GrayPyramid};
 use miro_image::math::{Mat2, Vec2};
 use miro_misc::parcmp;
@@ -71,12 +71,9 @@ impl Default for PyramLucasKanade {
     }
 }
 
-impl OpticFlow for PyramLucasKanade {
+impl OpticFlow<GrayImage> for PyramLucasKanade {
     type Err = Error;
-}
 
-impl Flow<GrayImage> for PyramLucasKanade {
-    
     /// Computes the optical flow.
     ///
     /// Processes an image `imI` containing points `u ∈ U` and returns the corresponding
@@ -110,8 +107,8 @@ impl Flow<GrayImage> for PyramLucasKanade {
     ///
     /// [1]: https://pdfs.semanticscholar.org/6841/d3368d4dfb52548cd0ed5fef29199d14c014.pdf
     #[allow(non_snake_case)]
-    fn flow(&self, imI: &GrayImage, pointsI: &Points, imJ: &GrayImage)
-        -> Result<CorrespondingPoints, Self::Err>
+    fn flow(&self, imI: &GrayImage, pointsI: &[Coordinates<f32>], imJ: &GrayImage)
+        -> Result<Vec<Option<Coordinates<f32>>>, Self::Err>
     {
         let pyrI = util::pyramid(imI, self.nlayers);
             
@@ -122,11 +119,12 @@ impl Flow<GrayImage> for PyramLucasKanade {
 }
 
 
-impl Flow<GrayPyramid> for PyramLucasKanade {
-    
+impl OpticFlow<GrayPyramid> for PyramLucasKanade {
+    type Err = Error;
+
     #[allow(non_snake_case)]
-    fn flow(&self, pyrI: &GrayPyramid, pointsI: &Points, pyrJ: &GrayPyramid)
-        -> Result<CorrespondingPoints, Self::Err>
+    fn flow(&self, pyrI: &GrayPyramid, pointsI: &[Coordinates<f32>], pyrJ: &GrayPyramid)
+        -> Result<Vec<Option<Coordinates<f32>>>, Self::Err>
     {
         let (wJ, hJ) = pyrJ[0].dimensions();
         

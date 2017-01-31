@@ -1,6 +1,6 @@
 use miro_error::{Error, TrackingCategory};
 use miro_euclidean::{Coordinates, Region};
-use miro_extn::{Flow, Tracker, Track};
+use miro_extn::{OpticFlow, Track};
 use miro_image::GrayImage;
 use miro_misc::statistics;
 
@@ -26,13 +26,11 @@ impl<F> Default for MedianFlow<F> where F: Default {
     }
 }
 
-impl<F> Tracker for MedianFlow<F> {
-    type Err = Error;
-}
-
 impl<F> Track<GrayImage> for MedianFlow<F>
-    where F: Flow<GrayImage>, F::Err: 'static + Send + Sync
+    where F: OpticFlow<GrayImage>, F::Err: 'static + Send + Sync
 {
+    type Err = Error;
+
     /// Median Flow tracker
     ///
     /// # Arguments
