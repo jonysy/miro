@@ -1,6 +1,6 @@
 mod util;
 
-use miro_core::error::{Error, MotionErr};
+use miro_error::{Error, MotionCategory};
 use miro_euclidean::{Coordinates, Dimensions};
 use miro_extn::{CorrespondingPoints, Flow, OpticFlow, Points};
 use miro_image::{GrayImage, GrayPyramid};
@@ -138,7 +138,7 @@ impl Flow<GrayPyramid> for PyramLucasKanade {
             if xI < 0.0 || yI < 0.0 || xI >= (wJ as f32) || yI >= (hJ as f32) {
                 return Err(
                     Error::new(
-                        MotionErr,
+                        MotionCategory::Generic,
                         format!("Point {} is outside image bounds {}x{}", pointI, wJ, hJ)
                     )
                 );
@@ -196,7 +196,7 @@ impl Flow<GrayPyramid> for PyramLucasKanade {
                 
                 // The inverse spatial gradient matrix
                 let HpyrI_inv = HpyrI.inv() // TODO return `None` instead?
-                    .ok_or(Error::new(MotionErr, "An error occurred while inverting a matrix"))?;
+                    .ok_or(Error::new(MotionCategory::Generic, "An error occurred while inverting a matrix"))?;
                 
                 // Initialization of iterative L-K
                 let mut flowlk = Vec2::new(0.0, 0.0);

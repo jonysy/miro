@@ -7,8 +7,8 @@ license = "MIT/Apache-2.0"
 [dependencies]
 nalgebra = "0.5.1"
 
-[dependencies.miro-core]
-path = "../core"
+[dependencies.miro-error]
+path = "../error"
 version = "0.1.0"
 
 [dependencies.miro-euclidean]

@@ -7,20 +7,28 @@ authors = ["Jony <jonysy@users.noreply.github.com>"]
 license = "MIT/Apache-2.0"
 
 [badges]
+gitter = { repository = "lychee-eng/miro" }
 travis-ci = { repository = "lychee-eng/miro" }
 
 [workspace]
 members = [
-	"crates/classification", "crates/core", "crates/detection", "crates/euclidean", "crates/extn", 
-	"crates/image", "crates/misc", "crates/motion", "crates/tracking"
+	"crates/classification", 
+	"crates/detection", 
+	"crates/error",
+	"crates/euclidean", 
+	"crates/extn", 
+	"crates/image", 
+	"crates/misc", 
+	"crates/motion", 
+	"crates/tracking"
 ]
 
 [dependencies.miro-classification]
 path = "crates/classification"
 version = "0.1.*"
 
-[dependencies.miro-core]
-path = "crates/core"
+[dependencies.miro-error]
+path = "crates/error"
 version = "0.1.*"
 
 [dependencies.miro-detection]

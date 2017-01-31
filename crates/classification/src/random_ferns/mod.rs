@@ -4,10 +4,10 @@ pub use self::fern::Fern;
 mod binary;
 mod fern;
 
-use core::{Error, Result};
-use euclidean::Region;
-use extn::{Classifier, SupervisedMut};
-use image::{GrayImage, GrayPyramid, IntegralImage};
+use miro_error::Never;
+use miro_euclidean::Region;
+use miro_extn::{Classifier, SupervisedMut};
+use miro_image::{GrayImage, GrayPyramid, IntegralImage};
 use rand::Rng;
 
 // pub type Posterior<F> where F: Float = F;
@@ -46,13 +46,13 @@ impl<T> RandomFerns<T> {
 
 impl<T> Classifier for RandomFerns<T> {
 
-	// TODO replace `Error` with `!` -> should never return an `Error`
-	type Err = Error;
+	/// `RandomFerns` should never return an error.
+	type Err = Never;
 }
 
 impl SupervisedMut<IntegralImage> for RandomFerns {
 
-	fn train<R, I>(&mut self, integral_image: &IntegralImage, region: R, label: I) -> Result
+	fn train<R, I>(&mut self, integral_image: &IntegralImage, region: R, label: I) -> Result<(), Self::Err>
 		where R: Into<Option<Region>>,
 			  I: Into<usize>
 	{
@@ -63,7 +63,7 @@ impl SupervisedMut<IntegralImage> for RandomFerns {
 
 impl<T> SupervisedMut<GrayImage> for RandomFerns<T> {
 
-	fn train<R, I>(&mut self, _: &GrayImage, _: R, _: I) -> Result
+	fn train<R, I>(&mut self, _: &GrayImage, _: R, _: I) -> Result<(), Self::Err>
 		where R: Into<Option<Region>>,
 			  I: Into<usize>
 	{
@@ -83,7 +83,7 @@ impl<T> SupervisedMut<GrayImage> for RandomFerns<T> {
 
 impl<T> SupervisedMut<GrayPyramid> for RandomFerns<T> {
 
-	fn train<R, I>(&mut self, _: &GrayPyramid, _: R, _: I) -> Result
+	fn train<R, I>(&mut self, _: &GrayPyramid, _: R, _: I) -> Result<(), Self::Err>
 		where R: Into<Option<Region>>,
 			  I: Into<usize>
 	{

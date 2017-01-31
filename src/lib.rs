@@ -1,6 +1,6 @@
 pub extern crate miro_classification as classification;
-pub extern crate miro_core as core;
 pub extern crate miro_detection as detection;
+pub extern crate miro_error as error;
 pub extern crate miro_euclidean as euclidean;
 pub extern crate miro_extn as extn;
 pub extern crate miro_image as image;

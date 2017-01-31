@@ -8,17 +8,6 @@ miro
 A modern, open, high-performance, ([soon to be](/../../issues/5)) GPU-accelerated computer vision 
 library providing state-of-the-art implementations and performance.
 
-## Philosophy
-
-* __Application Driven__:</br>
-... For a more research-driven approach, have a look at [mirage](/../../../mirage) and [illusions](/../../../illusions).
-
-* __Well-Written Documentation__:</br>
-Includes references, pseudo-code, brief descriptions illustrating the concept of the algorithms and data-structures, ..
-
-* __Modular__:</br>
-...The crate itself is made up of [μcrates](../../tree/master/crates)...
-
 ## Ecosystem
 
 See the [issues](/../../issues) page for a list of features planned or in development.
@@ -28,6 +17,22 @@ See the [issues](/../../issues) page for a list of features planned or in develo
 - [euclidean geometry](/../../issues/19)
 - [motion](/../../issues/7)
 - [tracking](/../../issues/11)
+
+### Cargo subcommands
+
+#### Specific μcrate/package
+
+```sh
+$ cargo [check | build | test] -p miro-[μcrate name] # e.g., cargo test -p miro-euclidean
+```
+
+#### All crates in the workspace
+
+```sh
+$ cargo [check | build | test] --all # e.g., cargo test --all
+```
+
+[issue#2878](https://github.com/rust-lang/cargo/issues/2878)
 
 ## Quick-start
 
@@ -60,12 +65,6 @@ extern crate miro;
 fn main() {
 	...
 }
-```
-
-### Tests
-
-```
-$ cargo test -p miro-euclidean
 ```
 
 ## License

@@ -1,7 +1,7 @@
-use image::GrayImage;
-use miro_core::error::{Error, TrackingErr};
+use miro_error::{Error, TrackingCategory};
 use miro_euclidean::{Coordinates, Region};
 use miro_extn::{Flow, Tracker, Track};
+use miro_image::GrayImage;
 use miro_misc::statistics;
 
 /// [Median Flow][1] tracker: A tracker based on [optical flow][2]
@@ -31,7 +31,7 @@ impl<F> Tracker for MedianFlow<F> {
 }
 
 impl<F> Track<GrayImage> for MedianFlow<F>
-    where F: Flow<GrayImage>, F::Err: 'static
+    where F: Flow<GrayImage>, F::Err: 'static + Send + Sync
 {
     /// Median Flow tracker
     ///
@@ -72,7 +72,7 @@ impl<F> Track<GrayImage> for MedianFlow<F>
         let pointsJ = {
             self.algorithm
                 .flow(imI, &pointsI, imJ)
-                .map_err(|err| Error::new(TrackingErr, err))?
+                .map_err(|err| Error::new(TrackingCategory::Generic, err))?
         };
         
         // calculate medians

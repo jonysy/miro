@@ -31,8 +31,10 @@ pub struct Window {
 /// use miro::detection;
 /// 
 /// let color = [0.8125, 0.8125, 0.8125, 0.75];
-/// 
-/// let mut win = detection::window((640, 360), (100.0, 100.0), (20, 20), 1.5);
+/// let image_size = (640, 360);
+/// let min_window_size = (100.0, 100.0);
+/// let step = (20, 20);
+/// let mut win = detection::window(image_size, min_window_size, step, 1.5);
 /// 
 /// capture::conn();
 /// 
@@ -155,108 +157,112 @@ impl Iterator for Window {
 	}
 }
 
-#[test]
-fn test1() {
-	let image_width = 640;
-	let image_height = 360;
+#[cfg(test)]
+mod tests {
 
-	let factor: f64 = 1.5;
+	#[test]
+	fn test1() {
+		let image_width = 640;
+		let image_height = 360;
 
-	let (xstep, ystep) = (10, 10);
+		let factor: f64 = 1.5;
 
-	let (minW, minH) = (100.0, 100.0);
+		let (xstep, ystep) = (10, 10);
 
-	let mut slider = slide((image_width, image_height), (minW, minH), (xstep, ystep), factor);
+		let (minW, minH) = (100.0, 100.0);
 
-	let scaled = |n: u32| {
-		let f = factor.powi(n as i32);
+		let mut slider = super::window((image_width, image_height), (minW, minH), (xstep, ystep), factor);
 
-		(minW * f, minH * f)
-	};
+		let scaled = |n: u32| {
+			let f = factor.powi(n as i32);
 
-	// iterate over a range of scaled regions (smallest scale -> largest)
-	for (w, h) in (0..).map(scaled) {
+			(minW * f, minH * f)
+		};
 
-		if w as u32 >= image_width || h as u32 >= image_height {
+		// iterate over a range of scaled regions (smallest scale -> largest)
+		for (w, h) in (0..).map(scaled) {
 
-			// scale is bigger than image, so break.
-			break
-		}
+			if w as u32 >= image_width || h as u32 >= image_height {
 
-
-		// for each row, scan each column
-		for y in (0..image_height).step_by(ystep).map(|y| y as f64) {
-
-			let bottom = (y + h) as u32;
-
-			if bottom >=  image_height {
-
+				// scale is bigger than image, so break.
 				break
 			}
 
-			for x in (0..image_width).step_by(xstep).map(|x| x as f64) {
 
-				let top_r = (x + w) as u32;
+			// for each row, scan each column
+			for y in (0..image_height).step_by(ystep).map(|y| y as f64) {
 
-				if top_r >= image_width {
+				let bottom = (y + h) as u32;
+
+				if bottom >=  image_height {
 
 					break
 				}
 
-				let a = slider.next().unwrap();
-				let b = [x, y, w, h];
+				for x in (0..image_width).step_by(xstep).map(|x| x as f64) {
 
-				assert_eq!(a, b);
+					let top_r = (x + w) as u32;
+
+					if top_r >= image_width {
+
+						break
+					}
+
+					let a = slider.next().unwrap();
+					let b = [x, y, w, h];
+
+					assert_eq!(a, b);
+				}
 			}
 		}
+
+		assert!(slider.next().is_none());
+		assert!(slider.next().is_none());
+		assert!(slider.next().is_none());
+		assert!(slider.next().is_none());
+		assert!(slider.next().is_none());
+		assert!(slider.next().is_none());
 	}
 
-	assert!(slider.next().is_none());
-	assert!(slider.next().is_none());
-	assert!(slider.next().is_none());
-	assert!(slider.next().is_none());
-	assert!(slider.next().is_none());
-	assert!(slider.next().is_none());
-}
+	#[test]
+	fn test2() {
+		let dim = (640, 360);
+		let step = (10, 10);
+		let min = (100.0, 360.0);
+		let factor = 1.5;
 
-#[test]
-fn test2() {
-	let dim = (640, 360);
-	let step = (10, 10);
-	let min = (100.0, 360.0);
-	let factor = 1.5;
+		let mut slider = super::window(dim, min, step, factor);
 
-	let mut slider = slide(dim, min, step, factor);
+		assert!(slider.next().is_none());
+		assert!(slider.next().is_none());
+	}
 
-	assert!(slider.next().is_none());
-	assert!(slider.next().is_none());
-}
+	#[test]
+	fn test3() {
+		let dim = (640, 360);
+		let step = (10, 10);
+		let min = (640.0, 100.0);
+		let factor = 1.5;
 
-#[test]
-fn test3() {
-	let dim = (640, 360);
-	let step = (10, 10);
-	let min = (640.0, 100.0);
-	let factor = 1.5;
+		let mut slider = super::window(dim, min, step, factor);
 
-	let mut slider = slide(dim, min, step, factor);
+		assert!(slider.next().is_none());
+		assert!(slider.next().is_none());
+	}
 
-	assert!(slider.next().is_none());
-	assert!(slider.next().is_none());
-}
+	#[test]
+	fn test4() {
+		let dim = (640, 360);
+		let step = (540, 260);
+		let min = (100.0, 100.0);
+		let factor = 1.5;
 
-#[test]
-fn test4() {
-	let dim = (640, 360);
-	let step = (540, 260);
-	let min = (100.0, 100.0);
-	let factor = 1.5;
+		let mut slider = super::window(dim, min, step, factor);
 
-	let mut slider = slide(dim, min, step, factor);
-
-	assert!(slider.next().is_some()); // (0, 0) 100 x 100
-	assert!(slider.next().is_some()); // (0, 0) (100 x 100) * 1.5 = (0, 0) (150 x 150)
-	assert!(slider.next().is_some()); // (0, 0) (150 x 150) * 1.5 = (0, 0) (225 x 225)
-	assert!(slider.next().is_some()); // (0, 0) (225 x 225) * 1.5 = (0, 0) (337.5 x 337.5)
-	assert!(slider.next().is_none()); // (0, 0) (337.5 x 337.5) * 1.5 = (0, 0) (506.25 x 506.25) > (w x 360)
+		assert!(slider.next().is_some()); // (0, 0) 100 x 100
+		assert!(slider.next().is_some()); // (0, 0) (100 x 100) * 1.5 = (0, 0) (150 x 150)
+		assert!(slider.next().is_some()); // (0, 0) (150 x 150) * 1.5 = (0, 0) (225 x 225)
+		assert!(slider.next().is_some()); // (0, 0) (225 x 225) * 1.5 = (0, 0) (337.5 x 337.5)
+		assert!(slider.next().is_none()); // (0, 0) (337.5 x 337.5) * 1.5 = (0, 0) (506.25 x 506.25) > (w x 360)
+	}
 }

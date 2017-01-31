@@ -4,11 +4,8 @@ version = "0.1.0"
 authors = ["Jony <jonysy@users.noreply.github.com>"]
 license = "MIT/Apache-2.0"
 
-[dependencies]
-image = "0.12.1"
-
-[dependencies.miro-core]
-path = "../core"
+[dependencies.miro-error]
+path = "../error"
 version = "0.1.0"
 
 [dependencies.miro-euclidean]
@@ -17,6 +14,10 @@ version = "0.1.0"
 
 [dependencies.miro-extn]
 path = "../extn"
+version = "0.1.0"
+
+[dependencies.miro-image]
+path = "../image"
 version = "0.1.0"
 
 [dependencies.miro-misc]

@@ -1,5 +1,5 @@
 [package]
-name = "miro-core"
+name = "miro-error"
 version = "0.1.0"
 authors = ["Jony <jonysy@users.noreply.github.com>"]
 license = "MIT/Apache-2.0"
