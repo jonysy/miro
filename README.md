@@ -47,8 +47,9 @@ work by you shall be dual licensed as below, without any additional terms or con
 
 ## Community 
 
-People are expected to follow the [Rust Code of Conduct] when discussing mīrō on the Github page, 
-Gitter channel, or other venues.
+People are expected to follow a code of conduct similar to that of 
+the [Rust organization][Rust Code of Conduct] when discussing mīrō on the Github page, Gitter 
+channel, or other venues.
 
 ## License
 
