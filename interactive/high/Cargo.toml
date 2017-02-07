@@ -1,0 +1,23 @@
+[package]
+name = "high"
+version = "0.1.0"
+authors = ["Jony <jonysy@users.noreply.github.com>"]
+license = "MIT/Apache-2.0"
+
+[lib]
+crate-type = ["dylib"]
+
+[dependencies]
+dispatch = "0.1.1"
+gfx_device_gl = "0.12.0"
+image = "0.12.1"
+log = "0.3.6"
+objc = "0.2.2"
+objc-foundation = "0.1.1"
+piston_window = "0.61.0"
+
+[dependencies.av-foundation]
+path = "../../av-foundation"
+
+[dependencies.current]
+path = "../current"

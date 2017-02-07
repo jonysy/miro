@@ -1,0 +1,25 @@
+[package]
+name = "mirage"
+version = "0.2.0"
+authors = ["Jony <jonysy@users.noreply.github.com>"]
+license = "MIT/Apache-2.0"
+build = true
+
+# [workspace]
+# members = [
+# 	"current", "dynamic", "high"
+# ]
+
+[lib]
+crate-type = ["dylib"]
+
+[dependencies]
+libloading = "0.3.1"
+log = "0.3.6"
+
+[dependencies.high]
+path = "high"
+
+[dependencies.miro]
+path = "../miro"
+version = "0.1.0"
