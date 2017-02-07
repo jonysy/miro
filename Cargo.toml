@@ -20,7 +20,9 @@ members = [
 	"crates/image", 
 	"crates/misc", 
 	"crates/motion", 
-	"crates/tracking"
+	"crates/tracking",
+	"experimental",
+	"interactive"
 ]
 
 [dependencies.miro-classification]

@@ -17,7 +17,7 @@ objc-foundation = "0.1.1"
 piston_window = "0.61.0"
 
 [dependencies.av-foundation]
-path = "../../av-foundation"
+path = "../../../av-foundation"
 
 [dependencies.current]
 path = "../current"

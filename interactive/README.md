@@ -1,7 +1,5 @@
 # mirage
 
-[![Join the chat at https://gitter.im/lychee-eng/miro](https://badges.gitter.im/lychee-eng/miro.svg)](https://gitter.im/lychee-eng/miro?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
 A crate for rapid prototyping and analysis of computer vision algorithms.
 
 ## Concept
