@@ -47,8 +47,15 @@ work by you shall be dual licensed as below, without any additional terms or con
 
 ## Community 
 
-People are expected to follow the [Rust Code of Conduct] when discussing mīrō on the Github page, 
-Gitter channel, or other venues.
+People are expected to follow a code of conduct similar to that of 
+the [Rust organization][Rust Code of Conduct] when discussing mīrō on the Github page, Gitter 
+channel, or other venues.
+
+## License
+
+Dual licensed under
+  * Apache License, Version 2.0 ([LICENSE-APACHE][apache] or http://www.apache.org/licenses/LICENSE-2.0)
+  * MIT license ([LICENSE-MIT][mit] or http://opensource.org/licenses/MIT)
 
 ## License
 
