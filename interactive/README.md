@@ -37,21 +37,8 @@ $ rustup default nightly
 
 ## Platforms
 
-* Currently only supports macOS (please refer to [#5](/../../issues/5))
-
-## License
-
-Dual licensed under
-  * Apache License, Version 2.0 ([LICENSE-APACHE][apache] or http://www.apache.org/licenses/LICENSE-2.0)
-  * MIT license ([LICENSE-MIT][mit] or http://opensource.org/licenses/MIT)
-
-### Contribution
-
-Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in the 
-work by you shall be dual licensed as above, without any additional terms or conditions.
+* Currently only supports macOS (please refer to issue#26)
 
 [high-level-post]: http://blog.piston.rs/2014/12/27/the-road-to-high-level-libraries/
 [interactive-wiki]: https://en.wikipedia.org/wiki/Interactive_programming
 [rustup]: https://www.rustup.rs
-[apache]: ../../../license/blob/master/LICENSE-APACHE
-[mit]: ../../../license/blob/master/LICENSE-MIT
