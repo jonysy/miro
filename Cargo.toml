@@ -2,61 +2,73 @@
 name = "miro"
 categories = ["science"]
 description = "A modern computer vision library."
-version = "0.1.0"
+version = "0.0.1"
 authors = ["Jony <jonysy@users.noreply.github.com>"]
 license = "MIT/Apache-2.0"
 
-[badges]
-gitter = { repository = "lychee-eng/miro" }
-travis-ci = { repository = "lychee-eng/miro" }
+[badges.gitter]
+repository = "lychee-eng/miro"
 
-[workspace]
-members = [
-	"crates/classification", 
-	"crates/detection", 
-	"crates/error",
-	"crates/euclidean", 
-	"crates/extn", 
-	"crates/image", 
-	"crates/misc", 
-	"crates/motion", 
-	"crates/tracking",
-	"experimental",
-	"interactive"
-]
+[badges.travis-ci]
+repository = "lychee-eng/miro"
 
-[dependencies.miro-classification]
-path = "crates/classification"
-version = "0.1.*"
+[dependencies]
+image = "0.12.3"
+imageproc = "0.7.0"
 
-[dependencies.miro-error]
-path = "crates/error"
-version = "0.1.*"
+[dependencies.euclidean]
+path = "../euclidean"
 
-[dependencies.miro-detection]
-path = "crates/detection"
-version = "0.1.*"
+[dev-dependencies]
+speculate = "0.0.24"
 
-[dependencies.miro-euclidean]
-path = "crates/euclidean"
-version = "0.1.*"
+# [workspace]
+# members = [
+# 	"crates/classification", 
+# 	"crates/detection", 
+# 	"crates/error",
+# 	"crates/euclidean", 
+# 	"crates/extn", 
+# 	"crates/image", 
+# 	"crates/misc", 
+# 	"crates/motion", 
+# 	"crates/tracking",
+# 	"experimental",
+# 	"interactive"
+# ]
 
-[dependencies.miro-extn]
-path = "crates/extn"
-version = "0.1.*"
+# [dependencies.miro-classification]
+# path = "crates/classification"
+# version = "0.1.*"
 
-[dependencies.miro-image]
-path = "crates/image"
-version = "0.1.*"
+# [dependencies.miro-error]
+# path = "crates/error"
+# version = "0.1.*"
 
-[dependencies.miro-misc]
-path = "crates/misc"
-version = "0.1.*"
+# [dependencies.miro-detection]
+# path = "crates/detection"
+# version = "0.1.*"
 
-[dependencies.miro-motion]
-path = "crates/motion"
-version = "0.1.*"
+# [dependencies.miro-euclidean]
+# path = "crates/euclidean"
+# version = "0.1.*"
 
-[dependencies.miro-tracking]
-path = "crates/tracking"
-version = "0.1.*"
+# [dependencies.miro-extn]
+# path = "crates/extn"
+# version = "0.1.*"
+
+# [dependencies.miro-image]
+# path = "crates/image"
+# version = "0.1.*"
+
+# [dependencies.miro-misc]
+# path = "crates/misc"
+# version = "0.1.*"
+
+# [dependencies.miro-motion]
+# path = "crates/motion"
+# version = "0.1.*"
+
+# [dependencies.miro-tracking]
+# path = "crates/tracking"
+# version = "0.1.*"
