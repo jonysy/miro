@@ -1,3 +1,8 @@
+use piston_image::GrayImage;
+use std::ops::Deref;
+
+pub type GrayPyramid = Pyramid<GrayImage>;
+
 /// A pyramid representation of an image of type `I`.
 #[derive(Debug)]
 pub struct Pyramid<I> {
@@ -6,7 +11,20 @@ pub struct Pyramid<I> {
 
 impl<I> Pyramid<I> {
 
-    /// Constructs a pyramid representation of the provided image.
+    /// Builds a pyramid representation of the provided image.
+    ///
+    /// The pyramid representation is built in a recursive fashion: compute I¹ from I⁰, then 
+    /// compute I² from I¹, and so on.. The bottom of the pyramid is the initial, and the largest,
+    /// image.
+    ///
+    /// # Arguments
+    ///
+    /// * `im` - The highest resolution image (the raw image or the "zeroᵗʰ" level image).
+    /// * `nlayers` - The height of the pyramid.
+    ///
+    /// # Returns
+    ///
+    /// Returns the pyramid representation of image `im`
     pub fn new<F>(image: I, height: usize, apply: F) -> Pyramid<I> where F: Fn(&I) -> I {
 
         let mut images = Vec::with_capacity(height);
@@ -25,5 +43,14 @@ impl<I> Pyramid<I> {
         }
 
         Pyramid { images: images }
+    }
+}
+
+impl<I> Deref for Pyramid<I> {
+
+    type Target = Vec<I>;
+
+    fn deref(&self) -> &Vec<I> {
+        &self.images
     }
 }

@@ -5,70 +5,42 @@ description = "A modern computer vision library."
 version = "0.0.1"
 authors = ["Jony <jonysy@users.noreply.github.com>"]
 license = "MIT/Apache-2.0"
+repository = "https://github.com/lychee-eng/miro"
+readme = "README.md"
+documentation = "https://docs.rs/miro"
 
-[badges.gitter]
-repository = "lychee-eng/miro"
 
-[badges.travis-ci]
-repository = "lychee-eng/miro"
+[badges]
+    [badges.gitter]
+        repository = "lychee-eng/miro"
+    [badges.travis-ci]
+        repository = "lychee-eng/miro"
 
 [dependencies]
-image = "0.12.3"
-imageproc = "0.7.0"
-
-[dependencies.euclidean]
-path = "../euclidean"
+    image = "0.12.3"
+    imageproc = "0.7.0"
+    log = "0.3.6"
+    nalgebra = "0.5.1"
+    num = "0.1.36"
+    rand = "0.3.15"
+    [dependencies.euclidean]
+        # git = "https://github.com/lychee-eng/euclidean.git"
+        path = "../euclidean"
+    [dependencies.float]
+        # git = "https://github.com/jonysy/float.git"
+        path = "../../float"
 
 [dev-dependencies]
-speculate = "0.0.24"
+    speculate = "0.0.24"
+
+[features]
+    # no features by default
+    default = []
+    # The feature "float_guard" depends on nothing else.
+    float_guard = []
 
 # [workspace]
 # members = [
-# 	"crates/classification", 
-# 	"crates/detection", 
-# 	"crates/error",
-# 	"crates/euclidean", 
-# 	"crates/extn", 
-# 	"crates/image", 
-# 	"crates/misc", 
-# 	"crates/motion", 
-# 	"crates/tracking",
 # 	"experimental",
 # 	"interactive"
 # ]
-
-# [dependencies.miro-classification]
-# path = "crates/classification"
-# version = "0.1.*"
-
-# [dependencies.miro-error]
-# path = "crates/error"
-# version = "0.1.*"
-
-# [dependencies.miro-detection]
-# path = "crates/detection"
-# version = "0.1.*"
-
-# [dependencies.miro-euclidean]
-# path = "crates/euclidean"
-# version = "0.1.*"
-
-# [dependencies.miro-extn]
-# path = "crates/extn"
-# version = "0.1.*"
-
-# [dependencies.miro-image]
-# path = "crates/image"
-# version = "0.1.*"
-
-# [dependencies.miro-misc]
-# path = "crates/misc"
-# version = "0.1.*"
-
-# [dependencies.miro-motion]
-# path = "crates/motion"
-# version = "0.1.*"
-
-# [dependencies.miro-tracking]
-# path = "crates/tracking"
-# version = "0.1.*"
