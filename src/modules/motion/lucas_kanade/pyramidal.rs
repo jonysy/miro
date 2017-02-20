@@ -128,9 +128,9 @@ impl Flow<GrayPyramid> for PyramLk {
                 continue;
             }
 
-            #[cfg(not(feature = "float_guard"))]
+            #[cfg(not(feature = "pilot"))]
             let zero: f32 = 0.0;
-            #[cfg(feature = "float_guard")]
+            #[cfg(feature = "pilot")]
             let zero: ::float::FloatGuard<f32, ::float::Finite> = num::zero();
             
             // The optical flow vector at level `L` or the flow at the bottom of the pyramid.
@@ -164,18 +164,37 @@ impl Flow<GrayPyramid> for PyramLk {
                 // Derivatives
                 let capacity = {max_x_i - min_x_i}.ceil() * {max_y_i - min_y_i}.ceil();
 
-                #[cfg(feature = "float_guard")]
+                #[cfg(feature = "pilot")]
                 let mut derivatives_i = Vec::with_capacity(num::cast(capacity).unwrap());
 
-                #[cfg(not(feature = "float_guard"))]
+                #[cfg(not(feature = "pilot"))]
                 let mut derivatives_i = Vec::with_capacity(capacity as usize);
                 
                 // Area of the neighborhood (integration window)
+                #[cfg(feature = "pilot")]
                 for x in min_x_i..max_x_i {
                     for y in min_y_i..max_y_i {
                     
                         // // Derivative of `pyrI` wrt `x`
                         // let fx = (subpx(pyrI, x + 1., y) - subpx(pyrI, x - 1., y)) / 2.0;
+                        
+                        // // Derivative of `pyrI` wrt `y`
+                        // let fy = (subpx(pyrI, x, y + 1.) - subpx(pyrI, x, y - 1.)) / 2.0;
+                        
+                        // derivativesI.push((fx, fy));
+                        
+                        // HpyrI.m11 += fx * fx;
+                        // HpyrI.m12 += fx * fy;
+                        // HpyrI.m21 += fx * fy;
+                        // HpyrI.m22 += fy * fy;
+                    }
+                }
+
+                #[cfg(not(feature = "pilot"))]
+                for y in (min_x_i as usize)..(max_x_i as usize) {
+                    for y in (min_y_i as usize)..(max_y_i as usize) {
+                        // Derivative of `pyrI` wrt `x`
+                        // let fx = (subpx(i, x + 1., y) - subpx(pyrI, x - 1., y)) / 2.0;
                         
                         // // Derivative of `pyrI` wrt `y`
                         // let fy = (subpx(pyrI, x, y + 1.) - subpx(pyrI, x, y - 1.)) / 2.0;

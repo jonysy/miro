@@ -12,7 +12,7 @@
 #[macro_use]
 extern crate log;
 
-#[cfg(feature = "float_guard")]
+#[cfg(feature = "pilot")]
 extern crate float;
 
 extern crate euclidean;

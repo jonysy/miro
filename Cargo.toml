@@ -36,8 +36,8 @@ documentation = "https://docs.rs/miro"
 [features]
     # no features by default
     default = []
-    # The feature "float_guard" depends on nothing else.
-    float_guard = []
+    # The feature "pilot" depends on nothing else.
+    pilot = []
 
 # [workspace]
 # members = [
