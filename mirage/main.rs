@@ -1,15 +1,16 @@
 use high::{capture, piston};
-use miro::extn::Track;
-use miro::image::ConvertBuffer;
-use miro::motion::PyramLucasKanade;
-use miro::tracking::MedianFlow;
+use image::ConvertBuffer;
+
+use miro::core::tracking::Track;
+use miro::modules::motion::PyramLk;
+use miro::modules::tracking::MedianFlow;
 
 mod util {
 
 	include!(concat!("../main-", "util.rs"));
 }
 
-let mf = MedianFlow::<PyramLucasKanade>::default();
+let mf = MedianFlow::<PyramLk>::default();
 
 let color = [0.8125, 0.8125, 0.8125, 0.75];
 let mut pressed = false;

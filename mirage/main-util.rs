@@ -1,5 +1,5 @@
 use high::piston;
-use miro::image::GrayImage;
+use image::GrayImage;
 
 pub fn update_drag(pressed: &mut bool, rectangle: &mut Option<[f64; 4]>) {
 
