@@ -41,6 +41,6 @@ documentation = "https://docs.rs/miro"
 
 # [workspace]
 # members = [
-# 	"experimental",
-# 	"interactive"
+# 	"illusions",
+# 	"mirage"
 # ]

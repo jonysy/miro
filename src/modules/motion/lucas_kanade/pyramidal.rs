@@ -1,6 +1,7 @@
 use core::motion::Flow;
-use error::{Error, ErrorKind, Result};
+use error::Result;
 use euclidean::Size2D;
+use float::FloatGuard;
 use image::GrayPyramid;
 use nalgebra::{Inv, Mat2, Vec2};
 use num;
@@ -107,7 +108,8 @@ impl Flow<GrayPyramid> for PyramLk {
 
     /// Computes the optical flow using pre-computed image pyramids.
     fn flow(&self, pyramid_i: &GrayPyramid, points_i: &[Point<f32>], pyramid_j: &GrayPyramid)
-        -> Result<Vec<OptPoint<f32>>> {
+        -> Result<Vec<OptPoint<f32>>> 
+    {
 
         let [window_width, window_height] = self.win.dimensions();
         let (w_j, h_j) = pyramid_j[0].dimensions();
@@ -119,8 +121,6 @@ impl Flow<GrayPyramid> for PyramLk {
             
             if x_i < 0.0 || y_i < 0.0 || x_i >= (w_j as f32) || y_i >= (h_j as f32) {
                 // TODO return error instead?
-                // TODO is there a performance cost (dev. only)?
-                // https://medium.com/@robertgrosse/how-copying-an-int-made-my-code-11-times-faster-f76c66312e0f
                 debug!("Point {} is outside image bounds {}x{}", point_i, w_j, h_j);
 
                 corresponding_points.push(None);
@@ -128,10 +128,7 @@ impl Flow<GrayPyramid> for PyramLk {
                 continue;
             }
 
-            #[cfg(not(feature = "pilot"))]
-            let zero: f32 = 0.0;
-            #[cfg(feature = "pilot")]
-            let zero: ::float::FloatGuard<f32, ::float::Finite> = num::zero();
+            let zero: FloatGuard<f32> = num::zero();
             
             // The optical flow vector at level `L` or the flow at the bottom of the pyramid.
             let mut ground_flow = Vec2 {x: zero, y: zero};
@@ -164,47 +161,31 @@ impl Flow<GrayPyramid> for PyramLk {
                 // Derivatives
                 let capacity = {max_x_i - min_x_i}.ceil() * {max_y_i - min_y_i}.ceil();
 
-                #[cfg(feature = "pilot")]
                 let mut derivatives_i = Vec::with_capacity(num::cast(capacity).unwrap());
-
-                #[cfg(not(feature = "pilot"))]
-                let mut derivatives_i = Vec::with_capacity(capacity as usize);
                 
                 // Area of the neighborhood (integration window)
-                #[cfg(feature = "pilot")]
                 for x in min_x_i..max_x_i {
                     for y in min_y_i..max_y_i {
-                    
-                        // // Derivative of `pyrI` wrt `x`
-                        // let fx = (subpx(pyrI, x + 1., y) - subpx(pyrI, x - 1., y)) / 2.0;
                         
-                        // // Derivative of `pyrI` wrt `y`
-                        // let fy = (subpx(pyrI, x, y + 1.) - subpx(pyrI, x, y - 1.)) / 2.0;
-                        
-                        // derivativesI.push((fx, fy));
-                        
-                        // HpyrI.m11 += fx * fx;
-                        // HpyrI.m12 += fx * fy;
-                        // HpyrI.m21 += fx * fy;
-                        // HpyrI.m22 += fy * fy;
-                    }
-                }
+                        let x: f32 = x.into();
+                        let y: f32 = y.into();
 
-                #[cfg(not(feature = "pilot"))]
-                for y in (min_x_i as usize)..(max_x_i as usize) {
-                    for y in (min_y_i as usize)..(max_y_i as usize) {
-                        // Derivative of `pyrI` wrt `x`
-                        // let fx = (subpx(i, x + 1., y) - subpx(pyrI, x - 1., y)) / 2.0;
+                        // Derivative of `i` wrt `x`
+                        let fx = (
+                            subpx(i, x + 1., y) - subpx(i, x - 1., y)
+                        ) / 2.0;
                         
-                        // // Derivative of `pyrI` wrt `y`
-                        // let fy = (subpx(pyrI, x, y + 1.) - subpx(pyrI, x, y - 1.)) / 2.0;
+                        // Derivative of `i` wrt `y`
+                        let fy = (
+                            subpx(i, x, y + 1.) - subpx(i, x, y - 1.)
+                        ) / 2.0;
                         
-                        // derivativesI.push((fx, fy));
+                        derivatives_i.push((fx, fy));
                         
-                        // HpyrI.m11 += fx * fx;
-                        // HpyrI.m12 += fx * fy;
-                        // HpyrI.m21 += fx * fy;
-                        // HpyrI.m22 += fy * fy;
+                        h_i.m11 += fx * fx;
+                        h_i.m12 += fx * fy;
+                        h_i.m21 += fx * fy;
+                        h_i.m22 += fy * fy;
                     }
                 }
                 
@@ -228,20 +209,25 @@ impl Flow<GrayPyramid> for PyramLk {
                     // Image mismatch vector
                     let mut mismatch = Vec2::new(zero, zero);
                     
-                    // let mut it = derivativesI.iter();
+                    let mut it = derivatives_i.iter();
                     
-                    // for xIwin in RangeInc(min_xI, max_xI) { for yIwin in RangeInc(min_yI, max_yI) {
+                    for x_i_win in min_x_i..max_x_i {
+                        for y_i_win in min_y_i..max_y_i {
                         
-                    //     let xJwin = xIwin + pyr_guess[0] + flowlk[0];
-                    //     let yJwin = yIwin + pyr_guess[1] + flowlk[1];
+                            let x_j_win: f32 = (x_i_win + pyramidal_guess[0] + flowlk[0]).into();
+                            let y_j_win: f32 = (y_i_win + pyramidal_guess[1] + flowlk[1]).into();
+                            
+                            let x_i_win: f32 = x_i_win.into();
+                            let y_i_win: f32 = y_i_win.into();
+
+                            // Image difference
+                            let delta = subpx(i, x_i_win, y_i_win) - subpx(j, x_j_win, y_j_win);
                         
-                    //     // Image difference
-                    //     let delta = subpx(pyrI, xIwin, yIwin) - subpx(pyrJ, xJwin, yJwin);
-                        
-                    //     let &(fx, fy) = it.next().unwrap();
-                    //     mismatch[0] += delta * fx;
-                    //     mismatch[1] += delta * fy;
-                    // }}
+                            let &(fx, fy) = it.next().unwrap();
+                            mismatch[0] += delta * fx;
+                            mismatch[1] += delta * fy;
+                        }
+                    }
                     
                     // Optical flow (Lucas-Kanade)
                     let ηk = h_i_inv * mismatch;
@@ -250,12 +236,14 @@ impl Flow<GrayPyramid> for PyramLk {
                     flowlk = flowlk + ηk;
                 }
                 
-                // if level == 0 {
-                //     flow_bop = flowlk;
-                // } else {
-                //     // Guess for next iteration
-                //     pyr_guess = (pyr_guess + flowlk) * 2.0
-                // }
+                if level == 0 {
+                    ground_flow = flowlk;
+                } else {
+                    let two = unsafe { FloatGuard::from_unchecked(2.0) };
+                    // Guess for next iteration
+                    pyramidal_guess[0] = (pyramidal_guess[0] + flowlk[0]) * two;
+                    pyramidal_guess[1] = (pyramidal_guess[1] + flowlk[1]) * two;
+                }
             }
             
             // The final optical flow vector
@@ -265,11 +253,11 @@ impl Flow<GrayPyramid> for PyramLk {
             let x_j = x_i + resultant_flow.x;
             let y_j = y_i + resultant_flow.y;
             
-            // if cmp::min(x_j, y_j) < 0.0 || x_j >= (w_j as f32) || y_j >= (h_j as f32) {
+            if cmp::min(x_j, y_j) < 0.0 || x_j >= (w_j as f32) || y_j >= (h_j as f32) {
                 
-            //     corresponding_points.push(None);
-            //     continue;
-            // }
+                corresponding_points.push(None);
+                continue;
+            }
             
             // Location of point on `J` (v = u + final optical flow vector)
             let corresponding_point = Some([x_j, y_j].into());

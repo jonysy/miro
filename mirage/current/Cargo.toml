@@ -1,0 +1,26 @@
+[package]
+
+name = "current"
+version = "0.1.2"
+authors = [
+    "bvssvni <bvssvni@gmail.com>",
+    "Jonathan Reem <jonathan.reem@gmail.com>"
+]
+keywords = ["globals", "singleton", "current", "piston"]
+description = "A library for setting current values for stack scope, such as application structure"
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/pistondevelopers/current.git"
+homepage = "https://github.com/pistondevelopers/current"
+
+[lib]
+
+name = "current"
+path = "src/lib.rs"
+
+[dependencies]
+lazy_static = "0.2.2"
+
+[features]
+default = []
+unstable = []
